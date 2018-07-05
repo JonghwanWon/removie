@@ -32,7 +32,9 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-const MoviePost = ({ movies, count }) => (
+const MoviePost = ({
+  movies, count, page, loadNextPage,
+}) => (
   <StyledMoviePost>
     <MovieCounter count={count} />
     <MovieList>
@@ -45,15 +47,24 @@ const MoviePost = ({ movies, count }) => (
         />
       ))}
     </MovieList>
-    <Button type="button">
+    <Button type="button" onClick={() => loadNextPage(page)}>
       {'Read More'}
     </Button>
   </StyledMoviePost>
 );
 
 MoviePost.propTypes = {
-  movies: PropTypes.arrayOf(PropTypes.object).isRequired,
-  count: PropTypes.number.isRequired,
+  movies: PropTypes.arrayOf(PropTypes.object),
+  count: PropTypes.number,
+  page: PropTypes.number,
+  loadNextPage: PropTypes.func,
+};
+
+MoviePost.defaultProps = {
+  movies: null,
+  count: null,
+  page: 1,
+  loadNextPage: null,
 };
 
 export default MoviePost;
