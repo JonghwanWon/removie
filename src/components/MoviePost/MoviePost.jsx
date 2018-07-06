@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
+import { Spinner2 } from 'components/Spinner';
 import MovieCounter from './MovieCounter';
 import MovieItem from './MovieItem';
 
@@ -41,7 +42,7 @@ const Button = styled.button`
 `;
 
 const MoviePost = ({
-  movies, count, page, loadNextPage,
+  movies, count, page, loadNextPage, nextLoaded,
 }) => (
   <StyledMoviePost>
     <MovieCounter count={count} />
@@ -55,9 +56,13 @@ const MoviePost = ({
         />
       ))}
     </MovieList>
-    <Button type="button" onClick={() => loadNextPage(page)}>
-      {'Read More'}
-    </Button>
+    {nextLoaded ? (
+      <Button type="button" onClick={() => loadNextPage(page)}>
+        {'Read More'}
+      </Button>
+    ) : (
+      <Spinner2 />
+    )}
   </StyledMoviePost>
 );
 
@@ -66,6 +71,7 @@ MoviePost.propTypes = {
   count: PropTypes.number,
   page: PropTypes.number,
   loadNextPage: PropTypes.func,
+  nextLoaded: PropTypes.bool,
 };
 
 MoviePost.defaultProps = {
@@ -73,6 +79,7 @@ MoviePost.defaultProps = {
   count: null,
   page: 1,
   loadNextPage: null,
+  nextLoaded: true,
 };
 
 export default MoviePost;

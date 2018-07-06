@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import Header from 'components/Header';
 import MoviePost from 'components/MoviePost';
 import GenresTag from 'components/GenresTag';
+import { Spinner } from 'components/Spinner';
 
 const PATH_BASE = 'https://yts.am/api/v2/list_movies.json';
 const PARAM_GENRE = 'genre=';
@@ -25,6 +26,8 @@ class App extends Component {
     this.state = {
       result: null,
       genre: '',
+      loaded: false,
+      nextLoaded: false,
     };
   }
 
@@ -44,11 +47,18 @@ class App extends Component {
         page: data.page_number,
       },
       movies: updateMovies,
+      loaded: true,
+      nextLoaded: true,
     });
   };
 
-  callApi = (page = 1) => {
+  callApi = async (page = 1) => {
     const { genre } = this.state;
+
+    this.setState({
+      nextLoaded: false,
+    });
+
     return axios(
       `${PATH_BASE}?${DEFAULT_LIMIT}&${PARAM_SORT}&${PARAM_GENRE + genre}&${PARAM_PAGE}${page}`,
     )
@@ -61,25 +71,31 @@ class App extends Component {
   choiceGenre = async (genre) => {
     await this.setState({
       genre,
+      loaded: false,
     });
     await this.callApi();
   };
 
   render() {
-    const { result, movies } = this.state;
+    const {
+      result, movies, loaded, nextLoaded,
+    } = this.state;
 
     return (
       <Page>
         <Header />
         <GenresTag choiceGenre={this.choiceGenre} />
-        {result ? (
+        {loaded ? (
           <MoviePost
             movies={movies}
             count={result.movieCount}
             page={result.page}
             loadNextPage={this.loadNextPage}
+            nextLoaded={nextLoaded}
           />
-        ) : null}
+        ) : (
+          <Spinner />
+        )}
         {console.log(this.state)}
       </Page>
     );
