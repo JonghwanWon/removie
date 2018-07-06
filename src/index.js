@@ -14,6 +14,10 @@ injectGlobal([
     box-sizing: border-box;
   }
 
+  ul, li {
+    list-style:none;
+  }
+
   body {
     overflow-x: hidden;
   }

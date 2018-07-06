@@ -20,6 +20,7 @@ const MovieList = styled.ul`
   flex: 1;
   flex-wrap: wrap;
   list-style: none;
+  margin-bottom: 40px;
 `;
 
 const Button = styled.button`
@@ -30,6 +31,13 @@ const Button = styled.button`
   background: transparent;
   align-self: center;
   cursor: pointer;
+  color: #242424;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: #242424;
+    color: #fff;
+  }
 `;
 
 const MoviePost = ({

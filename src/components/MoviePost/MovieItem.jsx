@@ -5,9 +5,12 @@ import PropTypes from 'prop-types';
 const StyledMovieItem = styled.li`
   flex: 0 0 20%;
   padding: 0 12px;
+  margin-bottom: 24px;
 `;
 
-const Movie = styled.figure``;
+const Movie = styled.figure`
+  cursor: pointer;
+`;
 
 const MoviePoster = styled.img`
   display: block;
@@ -15,7 +18,7 @@ const MoviePoster = styled.img`
 `;
 
 const MovieInfo = styled.div`
-  margin: 16px 0 12px;
+  margin: 16px 0 0;
   font-size: 14px;
   font-weight: 400;
 `;
@@ -71,4 +74,5 @@ MovieItem.propTypes = {
   title: PropTypes.string.isRequired,
   genres: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
+
 export default MovieItem;

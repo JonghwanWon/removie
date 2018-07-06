@@ -4,14 +4,18 @@ import styled from 'styled-components';
 
 import Header from 'components/Header';
 import MoviePost from 'components/MoviePost';
+import GenresTag from 'components/GenresTag';
 
 const PATH_BASE = 'https://yts.am/api/v2/list_movies.json';
+const PARAM_GENRE = 'genre=';
+const PARAM_SORT = 'sort_by=download_count';
 const DEFAULT_LIMIT = 'limit=15';
 const PARAM_PAGE = 'page=';
 
-const StyledRoot = styled.div`
+const Page = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
 `;
 
 class App extends Component {
@@ -20,6 +24,7 @@ class App extends Component {
 
     this.state = {
       result: null,
+      genre: '',
     };
   }
 
@@ -30,9 +35,7 @@ class App extends Component {
   setData = (data) => {
     const { movies } = this.state;
     const oldMovies = data.page_number !== 1 ? movies : [];
-    console.log(oldMovies);
     const updateMovies = [...oldMovies, ...data.movies];
-    console.log(updateMovies);
 
     this.setState({
       result: {
@@ -44,18 +47,31 @@ class App extends Component {
     });
   };
 
-  callApi = (page = 1) => axios(`${PATH_BASE}?${DEFAULT_LIMIT}&${PARAM_PAGE}${page}`)
-    .then(result => this.setData(result.data.data))
-    .catch(err => this.setState(err));
+  callApi = (page = 1) => {
+    const { genre } = this.state;
+    return axios(
+      `${PATH_BASE}?${DEFAULT_LIMIT}&${PARAM_SORT}&${PARAM_GENRE + genre}&${PARAM_PAGE}${page}`,
+    )
+      .then(result => this.setData(result.data.data))
+      .catch(err => this.setState(err));
+  };
 
   loadNextPage = page => this.callApi(page + 1);
+
+  choiceGenre = async (genre) => {
+    await this.setState({
+      genre,
+    });
+    await this.callApi();
+  };
 
   render() {
     const { result, movies } = this.state;
 
     return (
-      <StyledRoot>
+      <Page>
         <Header />
+        <GenresTag choiceGenre={this.choiceGenre} />
         {result ? (
           <MoviePost
             movies={movies}
@@ -65,7 +81,7 @@ class App extends Component {
           />
         ) : null}
         {console.log(this.state)}
-      </StyledRoot>
+      </Page>
     );
   }
 }
