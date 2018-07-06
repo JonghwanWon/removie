@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import Header from 'components/Header';
 import MoviePost from 'components/MoviePost';
 
-const PATH_BASE = 'https://yts.am/api/v2/list_movies.json/';
+const PATH_BASE = 'https://yts.am/api/v2/list_movies.json';
 const DEFAULT_LIMIT = 'limit=15';
 const PARAM_PAGE = 'page=';
 
@@ -18,25 +18,37 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      result: null,
+    };
   }
 
   componentDidMount() {
-    this.getApi();
+    this.callApi();
   }
 
-  setData = (result) => {
+  setData = (data) => {
+    const { movies } = this.state;
+    const oldMovies = data.page_number !== 1 ? movies : [];
+    console.log(oldMovies);
+    const updateMovies = [...oldMovies, ...data.movies];
+    console.log(updateMovies);
+
     this.setState({
-      result,
-      movies: result.movies,
+      result: {
+        limit: data.limit,
+        movieCount: data.movie_count,
+        page: data.page_number,
+      },
+      movies: updateMovies,
     });
   };
 
-  getApi = page => axios(`${PATH_BASE}?${DEFAULT_LIMIT}&${PARAM_PAGE}${page}`)
+  callApi = (page = 1) => axios(`${PATH_BASE}?${DEFAULT_LIMIT}&${PARAM_PAGE}${page}`)
     .then(result => this.setData(result.data.data))
     .catch(err => this.setState(err));
 
-  loadNextPage = page => this.getApi(page + 1);
+  loadNextPage = page => this.callApi(page + 1);
 
   render() {
     const { result, movies } = this.state;
@@ -47,12 +59,12 @@ class App extends Component {
         {result ? (
           <MoviePost
             movies={movies}
-            count={result.movie_count}
-            page={result.page_number}
+            count={result.movieCount}
+            page={result.page}
             loadNextPage={this.loadNextPage}
           />
         ) : null}
-        {console.log(result)}
+        {console.log(this.state)}
       </StyledRoot>
     );
   }
