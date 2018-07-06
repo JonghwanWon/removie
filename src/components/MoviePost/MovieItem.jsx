@@ -6,6 +6,16 @@ const StyledMovieItem = styled.li`
   flex: 0 0 20%;
   padding: 0 12px;
   margin-bottom: 24px;
+
+  &:nth-child(1) {
+    margin-right: 2px;
+  }
+  &:nth-child(1),
+  &:nth-child(2),
+  &:nth-child(3),
+  &:nth-child(4) {
+    flex-grow: 1;
+  }
 `;
 
 const Movie = styled.figure`
@@ -15,6 +25,7 @@ const Movie = styled.figure`
 const MoviePoster = styled.img`
   display: block;
   width: 100%;
+  transition: all 0.15s linear;
 `;
 
 const MovieInfo = styled.div`

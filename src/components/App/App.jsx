@@ -10,13 +10,14 @@ import { Spinner } from 'components/Spinner';
 const PATH_BASE = 'https://yts.am/api/v2/list_movies.json';
 const PARAM_GENRE = 'genre=';
 const PARAM_SORT = 'sort_by=download_count';
-const DEFAULT_LIMIT = 'limit=15';
+const PARAM_LIMIT = 'limit=';
 const PARAM_PAGE = 'page=';
 
 const Page = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-bottom: 240px;
 `;
 
 class App extends Component {
@@ -26,6 +27,7 @@ class App extends Component {
     this.state = {
       result: null,
       genre: '',
+      limit: '14',
       loaded: false,
       nextLoaded: false,
     };
@@ -53,27 +55,50 @@ class App extends Component {
   };
 
   callApi = async (page = 1) => {
-    const { genre } = this.state;
+    if (typeof this.source !== typeof undefined) {
+      this.source.cancel('canceled due to new request');
+    }
+
+    this.source = axios.CancelToken.source();
+
+    const { genre, limit } = this.state;
 
     this.setState({
       nextLoaded: false,
     });
 
     return axios(
-      `${PATH_BASE}?${DEFAULT_LIMIT}&${PARAM_SORT}&${PARAM_GENRE + genre}&${PARAM_PAGE}${page}`,
+      `${PATH_BASE}?${PARAM_LIMIT + limit}&${PARAM_SORT}&${PARAM_GENRE
+        + genre}&${PARAM_PAGE}${page}`,
+      { cancelToken: this.source.token },
     )
       .then(result => this.setData(result.data.data))
-      .catch(err => this.setState(err));
+      .catch((err) => {
+        if (axios.isCancel(err)) {
+          console.log('Request canceled', err);
+        } else {
+          console.log(err);
+        }
+        this.setState(err);
+      });
   };
 
-  loadNextPage = page => this.callApi(page + 1);
+  loadNextPage = async (page) => {
+    await this.setState({
+      limit: '15',
+    });
+    await this.callApi(page + 1);
+  };
 
   choiceGenre = async (genre) => {
-    await this.setState({
-      genre,
-      loaded: false,
-    });
-    await this.callApi();
+    if (this.state.genre !== genre) {
+      await this.setState({
+        genre,
+        limit: '14',
+        loaded: false,
+      });
+      await this.callApi();
+    }
   };
 
   render() {

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 const StyledMovieCounter = styled.span`
-  margin-bottom: 16px;
+  margin: 16px 0;
   font-size: 21px;
   font-weight: 300;
 `;

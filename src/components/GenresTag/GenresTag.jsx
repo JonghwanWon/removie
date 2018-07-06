@@ -30,14 +30,6 @@ const Genre = styled.li`
 }
 `;
 
-const Dot = styled.div`
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: ${props => props.color};
-  margin-right: 8px;
-`;
-
 const genres = [
   { name: 'comedy', color: '#1abc9c' },
   { name: 'sci-fi', color: '#e67e22' },
