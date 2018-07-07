@@ -1,3 +1,5 @@
 import MoviePost from './MoviePost';
+import MoviePostTitle from './MoviePostTitle';
+import MoviePostController from './MoviePostController';
 
-export default MoviePost;
+export { MoviePost, MoviePostTitle, MoviePostController };

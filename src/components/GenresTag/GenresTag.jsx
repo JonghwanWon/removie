@@ -10,7 +10,7 @@ const Genres = styled.ul`
 `;
 
 const Genre = styled.li`
-  flex: 1 1 20%;
+  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;

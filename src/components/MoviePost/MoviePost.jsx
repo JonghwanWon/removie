@@ -16,15 +16,6 @@ const StyledMoviePost = styled.div`
   margin: 0 auto;
 `;
 
-const MoviePostTitle = styled.h2`
-  align-self: center;
-  margin-top: 32px;
-  margin-bottom: 40px;
-  text-transform: Capitalize;
-  font-size: 36px;
-  font-weight: 300;
-`;
-
 const MovieList = styled.ul`
   display: flex;
   flex: 1;
@@ -50,12 +41,9 @@ const Button = styled.button`
 `;
 
 const MoviePost = ({
-  movies, count, page, loadNextPage, nextLoaded, genre,
+  movies, count, page, loadNextPage, nextLoaded,
 }) => (
   <StyledMoviePost>
-    <MoviePostTitle>
-      {genre !== '' ? `${genre} Movies` : 'Choose your favorite movie genre'}
-    </MoviePostTitle>
     <MovieCounter count={count} />
     <MovieList>
       {movies.map(movie => (
@@ -83,7 +71,6 @@ MoviePost.propTypes = {
   page: PropTypes.number,
   loadNextPage: PropTypes.func,
   nextLoaded: PropTypes.bool,
-  genre: PropTypes.string,
 };
 
 MoviePost.defaultProps = {
@@ -92,7 +79,6 @@ MoviePost.defaultProps = {
   page: 1,
   loadNextPage: null,
   nextLoaded: true,
-  genre: '',
 };
 
 export default MoviePost;

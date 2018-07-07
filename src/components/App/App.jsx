@@ -3,9 +3,9 @@ import axios from 'axios';
 import styled from 'styled-components';
 
 import Header from 'components/Header';
-import MoviePost from 'components/MoviePost';
-import GenresTag from 'components/GenresTag';
+import { MoviePost, MoviePostTitle, MoviePostController } from 'components/MoviePost';
 import { Spinner } from 'components/Spinner';
+import GenresTag from 'components/GenresTag';
 
 const PATH_BASE = 'https://yts.am/api/v2/list_movies.json';
 const PARAM_GENRE = 'genre=';
@@ -129,11 +129,12 @@ class App extends Component {
       <Page>
         <Header />
         <GenresTag choiceGenre={this.choiceGenre} selectedGenre={genre} />
+        <MoviePostTitle genre={genre} />
         {loaded ? (
           <MoviePost
             movies={movies}
-            count={result.movieCount}
             page={result.page}
+            count={result.movieCount}
             loadNextPage={this.loadNextPage}
             nextLoaded={nextLoaded}
             genre={genre}
