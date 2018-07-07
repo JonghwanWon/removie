@@ -37,6 +37,16 @@ class App extends Component {
     this.callApi();
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.props !== nextProps) {
+      return true;
+    }
+    if (this.state !== nextState) {
+      return true;
+    }
+    return false;
+  }
+
   setData = (data) => {
     const { movies } = this.state;
     const oldMovies = data.page_number !== 1 ? movies : [];
@@ -97,19 +107,28 @@ class App extends Component {
         limit: '14',
         loaded: false,
       });
+
       await this.callApi();
     }
   };
 
   render() {
     const {
-      result, movies, loaded, nextLoaded,
+      result, movies, loaded, nextLoaded, genre, error,
     } = this.state;
+
+    if (error) {
+      return (
+        <p>
+          {'Something went wrong'}
+        </p>
+      );
+    }
 
     return (
       <Page>
         <Header />
-        <GenresTag choiceGenre={this.choiceGenre} />
+        <GenresTag choiceGenre={this.choiceGenre} selectedGenre={genre} />
         {loaded ? (
           <MoviePost
             movies={movies}
@@ -117,6 +136,7 @@ class App extends Component {
             page={result.page}
             loadNextPage={this.loadNextPage}
             nextLoaded={nextLoaded}
+            genre={genre}
           />
         ) : (
           <Spinner />

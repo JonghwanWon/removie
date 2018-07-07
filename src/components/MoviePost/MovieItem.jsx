@@ -31,12 +31,13 @@ const MoviePoster = styled.img`
 const MovieInfo = styled.div`
   margin: 16px 0 0;
   font-size: 14px;
-  font-weight: 400;
+  font-weight: 300;
 `;
 
 const MovieTitle = styled.h2`
   margin-bottom: 8px;
   font-size: 21px;
+  font-weight: 300;
   line-height: 1.2em;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -49,6 +50,8 @@ const MovieTitle = styled.h2`
 const Genres = styled.div`
   display: flex;
   flex-wrap: wrap;
+  font-size: 13px;
+  color: #808080;
 `;
 
 const Genre = styled.span`

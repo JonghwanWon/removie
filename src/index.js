@@ -15,11 +15,14 @@ injectGlobal([
   }
 
   ul, li {
-    list-style:none;
+    list-style: none;
   }
 
   body {
     overflow-x: hidden;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
   }
 `,
 ]);

@@ -27,10 +27,15 @@ const Genre = styled.li`
   &:hover {
     border-color: #242424;
   }
+  &:first-child {
+    flex: 1 0 90%;
+    margin: 0 4px 8px;
+  }
 }
 `;
 
 const genres = [
+  { name: 'All' },
   { name: 'comedy', color: '#1abc9c' },
   { name: 'sci-fi', color: '#e67e22' },
   { name: 'horror', color: '#f1c40f' },
@@ -45,10 +50,25 @@ const genres = [
   { name: 'fantasy', color: '#70a1ff' },
 ];
 
-const GenresTag = ({ choiceGenre }) => (
+const matchGenres = (genre) => {
+  if (genre === 'All') {
+    return '';
+  }
+  return genre;
+};
+
+const activeStyle = {
+  borderColor: '#c0392b',
+};
+
+const GenresTag = ({ choiceGenre, selectedGenre }) => (
   <Genres>
     {genres.map(genre => (
-      <Genre key={Math.random()} onClick={() => choiceGenre(genre.name)}>
+      <Genre
+        key={Math.random()}
+        onClick={() => choiceGenre(matchGenres(genre.name))}
+        style={matchGenres(genre.name) !== selectedGenre ? null : activeStyle}
+      >
         {genre.name}
       </Genre>
     ))}
@@ -57,10 +77,12 @@ const GenresTag = ({ choiceGenre }) => (
 
 GenresTag.propTypes = {
   choiceGenre: PropTypes.func,
+  selectedGenre: PropTypes.string,
 };
 
 GenresTag.defaultProps = {
   choiceGenre: null,
+  selectedGenre: '',
 };
 
 export default GenresTag;
