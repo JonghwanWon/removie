@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 import { Spinner2 } from 'components/Spinner';
-import MovieItem from './MovieItem';
+import MovieList from './MovieList';
 
 const StyledMoviePost = styled.div`
   display: flex;
@@ -13,13 +13,6 @@ const StyledMoviePost = styled.div`
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
-`;
-
-const MovieList = styled.ul`
-  display: flex;
-  flex: 1;
-  flex-wrap: wrap;
-  margin-bottom: 40px;
 `;
 
 const Button = styled.button`
@@ -43,16 +36,7 @@ const MoviePost = ({
   movies, page, loadNextPage, nextLoaded,
 }) => (
   <StyledMoviePost>
-    <MovieList>
-      {movies.map(movie => (
-        <MovieItem
-          key={movie.id}
-          poster={movie.medium_cover_image}
-          title={movie.title}
-          genres={movie.genres}
-        />
-      ))}
-    </MovieList>
+    <MovieList movies={movies} />
     {nextLoaded ? (
       <Button type="button" onClick={() => loadNextPage(page)}>
         {'Read More'}

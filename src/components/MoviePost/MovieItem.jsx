@@ -6,16 +6,6 @@ const StyledMovieItem = styled.li`
   flex: 0 0 20%;
   padding: 0 12px;
   margin-bottom: 24px;
-
-  &:nth-child(1) {
-    margin-right: 2px;
-  }
-  &:nth-child(1),
-  &:nth-child(2),
-  &:nth-child(3),
-  &:nth-child(4) {
-    flex-grow: 1;
-  }
 `;
 
 const Movie = styled.figure`
@@ -33,6 +23,9 @@ const MovieSubInfo = styled.div`
     }
     img {
       transform: scale(1.05);
+    }
+    span {
+      opacity: 1;
     }
   }
 `;
@@ -89,10 +82,27 @@ const Genre = styled.span`
   }
 `;
 
-const MovieItem = ({ poster, title, genres }) => (
+const Runtime = styled.span`
+  position: absolute;
+  top: 16px;
+  left: 24px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 300;
+  opacity: 0;
+  z-index: 30;
+  transition: opacity 0.2s linear;
+`;
+
+const MovieItem = ({
+  poster, title, genres, runtime,
+}) => (
   <StyledMovieItem>
     <Movie>
       <MovieSubInfo>
+        <Runtime>
+          {`${runtime} min`}
+        </Runtime>
         <Overlay />
         <MoviePoster src={poster} alt={`${title} Poster`} />
       </MovieSubInfo>
@@ -118,10 +128,12 @@ MovieItem.propTypes = {
   poster: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   genres: PropTypes.arrayOf(PropTypes.string),
+  runtime: PropTypes.number,
 };
 
 MovieItem.defaultProps = {
   genres: undefined,
+  runtime: 0,
 };
 
 export default MovieItem;

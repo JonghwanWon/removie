@@ -27,8 +27,8 @@ class App extends Component {
     this.state = {
       result: null,
       genre: '',
+      limit: '15',
       sort: 'download_count',
-      limit: '14',
       loaded: false,
       nextLoaded: false,
     };
@@ -95,9 +95,6 @@ class App extends Component {
   };
 
   loadNextPage = async (page) => {
-    await this.setState({
-      limit: '15',
-    });
     await this.callApi(page + 1);
   };
 
@@ -107,7 +104,6 @@ class App extends Component {
     if (sel !== genre) {
       await this.setState({
         genre: sel,
-        limit: '14',
         loaded: false,
       });
 
@@ -121,7 +117,6 @@ class App extends Component {
     if (sort !== sel) {
       await this.setState({
         sort: sel,
-        limit: '14',
         loaded: false,
       });
       await this.callApi();
