@@ -22,6 +22,32 @@ const Movie = styled.figure`
   cursor: pointer;
 `;
 
+const MovieSubInfo = styled.div`
+  position: relative;
+  overflow: hidden;
+  box-shadow: rgb(255, 255, 255) 0px 0.5px 0px 0px inset, rgba(0, 0, 0, 0.3) 0px 3px 10px;
+
+  &:hover {
+    div {
+      background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0));
+    }
+    img {
+      transform: scale(1.05);
+    }
+  }
+`;
+
+const Overlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 35%;
+  background: transparent;
+  transition: all 0.2s ease-in-out;
+  z-index: 10;
+`;
+
 const MoviePoster = styled.img`
   display: block;
   width: 100%;
@@ -66,18 +92,23 @@ const Genre = styled.span`
 const MovieItem = ({ poster, title, genres }) => (
   <StyledMovieItem>
     <Movie>
-      <MoviePoster src={poster} alt={`${title} Poster`} />
+      <MovieSubInfo>
+        <Overlay />
+        <MoviePoster src={poster} alt={`${title} Poster`} />
+      </MovieSubInfo>
       <MovieInfo>
         <MovieTitle>
           {title}
         </MovieTitle>
-        <Genres>
-          {genres.map(genre => (
-            <Genre key={Math.random()}>
-              {genre}
-            </Genre>
-          ))}
-        </Genres>
+        {genres ? (
+          <Genres>
+            {genres.map(genre => (
+              <Genre key={Math.random()}>
+                {genre}
+              </Genre>
+            ))}
+          </Genres>
+        ) : null}
       </MovieInfo>
     </Movie>
   </StyledMovieItem>
@@ -86,7 +117,11 @@ const MovieItem = ({ poster, title, genres }) => (
 MovieItem.propTypes = {
   poster: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  genres: PropTypes.arrayOf(PropTypes.string).isRequired,
+  genres: PropTypes.arrayOf(PropTypes.string),
+};
+
+MovieItem.defaultProps = {
+  genres: undefined,
 };
 
 export default MovieItem;

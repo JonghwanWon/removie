@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 import { Spinner2 } from 'components/Spinner';
-import MovieCounter from './MovieCounter';
 import MovieItem from './MovieItem';
 
 const StyledMoviePost = styled.div`
@@ -41,10 +40,9 @@ const Button = styled.button`
 `;
 
 const MoviePost = ({
-  movies, count, page, loadNextPage, nextLoaded,
+  movies, page, loadNextPage, nextLoaded,
 }) => (
   <StyledMoviePost>
-    <MovieCounter count={count} />
     <MovieList>
       {movies.map(movie => (
         <MovieItem
@@ -67,7 +65,6 @@ const MoviePost = ({
 
 MoviePost.propTypes = {
   movies: PropTypes.arrayOf(PropTypes.object),
-  count: PropTypes.number,
   page: PropTypes.number,
   loadNextPage: PropTypes.func,
   nextLoaded: PropTypes.bool,
@@ -75,7 +72,6 @@ MoviePost.propTypes = {
 
 MoviePost.defaultProps = {
   movies: null,
-  count: null,
   page: 1,
   loadNextPage: null,
   nextLoaded: true,

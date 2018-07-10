@@ -9,7 +9,7 @@ import GenresTag from 'components/GenresTag';
 
 const PATH_BASE = 'https://yts.am/api/v2/list_movies.json';
 const PARAM_GENRE = 'genre=';
-const PARAM_SORT = 'sort_by=download_count';
+const PARAM_SORT = 'sort_by=';
 const PARAM_LIMIT = 'limit=';
 const PARAM_PAGE = 'page=';
 
@@ -27,6 +27,7 @@ class App extends Component {
     this.state = {
       result: null,
       genre: '',
+      sort: 'download_count',
       limit: '14',
       loaded: false,
       nextLoaded: false,
@@ -71,14 +72,14 @@ class App extends Component {
 
     this.source = axios.CancelToken.source();
 
-    const { genre, limit } = this.state;
+    const { genre, sort, limit } = this.state;
 
     this.setState({
       nextLoaded: false,
     });
 
     return axios(
-      `${PATH_BASE}?${PARAM_LIMIT + limit}&${PARAM_SORT}&${PARAM_GENRE
+      `${PATH_BASE}?${PARAM_LIMIT + limit}&${PARAM_SORT + sort}&${PARAM_GENRE
         + genre}&${PARAM_PAGE}${page}`,
       { cancelToken: this.source.token },
     )
@@ -100,10 +101,12 @@ class App extends Component {
     await this.callApi(page + 1);
   };
 
-  choiceGenre = async (genre) => {
-    if (this.state.genre !== genre) {
+  choiceGenre = async (sel) => {
+    const { genre } = this.state;
+
+    if (sel !== genre) {
       await this.setState({
-        genre,
+        genre: sel,
         limit: '14',
         loaded: false,
       });
@@ -112,9 +115,22 @@ class App extends Component {
     }
   };
 
+  choiceSort = async (sel) => {
+    const { sort } = this.state;
+
+    if (sort !== sel) {
+      await this.setState({
+        sort: sel,
+        limit: '14',
+        loaded: false,
+      });
+      await this.callApi();
+    }
+  };
+
   render() {
     const {
-      result, movies, loaded, nextLoaded, genre, error,
+      result, movies, loaded, nextLoaded, genre, error, sort,
     } = this.state;
 
     if (error) {
@@ -128,13 +144,13 @@ class App extends Component {
     return (
       <Page>
         <Header />
-        <GenresTag choiceGenre={this.choiceGenre} selectedGenre={genre} />
         <MoviePostTitle genre={genre} />
+        <GenresTag choiceGenre={this.choiceGenre} selectedGenre={genre} />
+        <MoviePostController choiceSort={this.choiceSort} selectedSort={sort} />
         {loaded ? (
           <MoviePost
             movies={movies}
             page={result.page}
-            count={result.movieCount}
             loadNextPage={this.loadNextPage}
             nextLoaded={nextLoaded}
             genre={genre}

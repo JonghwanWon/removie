@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 const StyledTitle = styled.h2`
   align-self: center;
-  margin-top: 32px;
+  margin-top: 80px;
   margin-bottom: 40px;
   text-transform: Capitalize;
   font-size: 36px;

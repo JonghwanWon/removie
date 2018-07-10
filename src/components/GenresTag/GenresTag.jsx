@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 
 const Genres = styled.ul`
   display: flex;
-  margin-top: 40px;
   width: 560px;
   flex-wrap: wrap;
+  margin-bottom: 40px;
 `;
 
 const Genre = styled.li`
