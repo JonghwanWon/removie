@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
+import StarRatingComponent from 'react-star-rating-component';
+
 const StyledMovieItem = styled.li`
   flex: 0 0 20%;
   padding: 0 12px;
@@ -17,14 +19,23 @@ const MovieSubInfo = styled.div`
   overflow: hidden;
   box-shadow: rgb(255, 255, 255) 0px 0.5px 0px 0px inset, rgba(0, 0, 0, 0.3) 0px 3px 10px;
 
+  & span {
+    opacity: 0;
+    z-index: 30;
+    transition: opacity 0.2s linear;
+  }
+
   &:hover {
-    div {
-      background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.25));
+    .overlay {
+      background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.45));
     }
     img {
       transform: scale(1.05);
     }
     span {
+      opacity: 1;
+    }
+    div {
       opacity: 1;
     }
   }
@@ -84,14 +95,11 @@ const Genre = styled.span`
 
 const Runtime = styled.span`
   position: absolute;
-  top: 16px;
+  top: 30px;
   left: 24px;
   color: #fff;
   font-size: 14px;
   font-weight: 300;
-  opacity: 0;
-  z-index: 30;
-  transition: opacity 0.2s linear;
 `;
 
 const Sysnopsis = styled.span`
@@ -100,24 +108,37 @@ const Sysnopsis = styled.span`
   text-overflow: ellipsis;
   overflow: hidden;
   word-wrap: break-word;
-
   width: 100%;
-  top: 50px;
+  top: 70px;
   padding: 0 24px;
-  z-index: 30;
-  opacity: 0;
-  transition: opacity 0.2s linear;
-
   line-height: 1.4em;
   -webkit-line-clamp: 15;
   -webkit-box-orient: vertical;
-
   font-size: 13px;
   color: #fff;
 `;
 
+const Rating = styled.div`
+  position: absolute;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 30px;
+  right: 24px;
+  background: transparent;
+  z-index: 30;
+  opacity: 0;
+  transition: opacity 0.2s linear;
+`;
+
+const RatingNumber = styled.span`
+  margin-right: 8px;
+  color: #fff;
+`;
+
 const MovieItem = ({
-  poster, title, genres, runtime, synopsis,
+  poster, title, genres, runtime, synopsis, rating,
 }) => (
   <StyledMovieItem>
     <Movie>
@@ -125,10 +146,37 @@ const MovieItem = ({
         <Runtime>
           {`${runtime} min`}
         </Runtime>
+        <Rating>
+          <RatingNumber>
+            {rating}
+          </RatingNumber>
+          <StarRatingComponent
+            style={{ fontSize: 16 }}
+            name="app6"
+            starColor="#ffb400"
+            emptyStarColor="#ffb400"
+            value={rating / 2}
+            renderStarIcon={(index, value) => (
+              <span>
+                <i className={index <= value ? 'fas fa-star' : 'far fa-star'} />
+              </span>
+            )}
+            renderStarIconHalf={() => (
+              <span>
+                <span style={{ position: 'absolute' }}>
+                  <i className="far fa-star" />
+                </span>
+                <span>
+                  <i className="fas fa-star-half" />
+                </span>
+              </span>
+            )}
+          />
+        </Rating>
         <Sysnopsis>
           {synopsis}
         </Sysnopsis>
-        <Overlay />
+        <Overlay className="overlay" />
         <MoviePoster src={poster} alt={`${title} Poster`} />
       </MovieSubInfo>
       <MovieInfo>
@@ -155,12 +203,14 @@ MovieItem.propTypes = {
   genres: PropTypes.arrayOf(PropTypes.string),
   runtime: PropTypes.number,
   synopsis: PropTypes.string,
+  rating: PropTypes.number,
 };
 
 MovieItem.defaultProps = {
   genres: undefined,
   runtime: 0,
   synopsis: '',
+  rating: 0,
 };
 
 export default MovieItem;
