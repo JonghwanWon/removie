@@ -27,7 +27,7 @@ const TopHeader = styled.div`
 `;
 
 const StyledSearch = styled.div`
-position: ${props => (props.scroll ? 'fixed' : 'relative')}
+  position: ${({ scroll } = this.props) => (scroll ? 'fixed' : 'relative')};
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -48,8 +48,18 @@ class Header extends Component {
     window.addEventListener('scroll', this.onScroll, false);
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.props !== nextProps) {
+      return true;
+    }
+    if (this.state !== nextState) {
+      return true;
+    }
+    return false;
+  }
+
   componentWillUnmount() {
-    window.addEventListener('scroll', this.onScroll);
+    window.removeEventListener('scroll', this.onScroll);
   }
 
   onScroll = () => {

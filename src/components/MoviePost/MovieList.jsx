@@ -21,6 +21,7 @@ const MovieList = ({ movies }) => (
           title={movie.title}
           genres={movie.genres}
           runtime={movie.runtime}
+          synopsis={movie.synopsis}
         />
       ))
       : null}

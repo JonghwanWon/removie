@@ -19,7 +19,7 @@ const MovieSubInfo = styled.div`
 
   &:hover {
     div {
-      background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0));
+      background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.25));
     }
     img {
       transform: scale(1.05);
@@ -35,7 +35,7 @@ const Overlay = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  height: 35%;
+  height: 100%;
   background: transparent;
   transition: all 0.2s ease-in-out;
   z-index: 10;
@@ -94,8 +94,30 @@ const Runtime = styled.span`
   transition: opacity 0.2s linear;
 `;
 
+const Sysnopsis = styled.span`
+  position: absolute;
+  display: -webkit-box;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  word-wrap: break-word;
+
+  width: 100%;
+  top: 50px;
+  padding: 0 24px;
+  z-index: 30;
+  opacity: 0;
+  transition: opacity 0.2s linear;
+
+  line-height: 1.4em;
+  -webkit-line-clamp: 15;
+  -webkit-box-orient: vertical;
+
+  font-size: 13px;
+  color: #fff;
+`;
+
 const MovieItem = ({
-  poster, title, genres, runtime,
+  poster, title, genres, runtime, synopsis,
 }) => (
   <StyledMovieItem>
     <Movie>
@@ -103,6 +125,9 @@ const MovieItem = ({
         <Runtime>
           {`${runtime} min`}
         </Runtime>
+        <Sysnopsis>
+          {synopsis}
+        </Sysnopsis>
         <Overlay />
         <MoviePoster src={poster} alt={`${title} Poster`} />
       </MovieSubInfo>
@@ -129,11 +154,13 @@ MovieItem.propTypes = {
   title: PropTypes.string.isRequired,
   genres: PropTypes.arrayOf(PropTypes.string),
   runtime: PropTypes.number,
+  synopsis: PropTypes.string,
 };
 
 MovieItem.defaultProps = {
   genres: undefined,
   runtime: 0,
+  synopsis: '',
 };
 
 export default MovieItem;
