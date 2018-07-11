@@ -42,6 +42,49 @@ const SearchNotFound = styled.p`
   padding-bottom: 80px;
 `;
 
+const RemoveBtn = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  margin: 0 16px;
+  border: none;
+  cursor: pointer;
+  background: transparent;
+  outline: none;
+  font-size: 16px;
+
+  &:before,
+  &:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: block;
+    width: 15px;
+    height: 1px;
+    background: #ccc;
+    transition: all 0.2s ease;
+  }
+
+  &:before {
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+  &:after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+
+  &:hover {
+    &:before,
+    &:after {
+      background: #242424;
+      transform: translate(-50%, -50%);
+    }
+  }
+`;
+
 class Search extends Component {
   constructor(props) {
     super(props);
@@ -88,6 +131,14 @@ class Search extends Component {
       });
   };
 
+  removeQuery = (e) => {
+    e.preventDefault();
+
+    this.setState({
+      keyword: '',
+    });
+  };
+
   render() {
     const { keyword, searchResult, loaded } = this.state;
 
@@ -120,7 +171,13 @@ class Search extends Component {
               d="M16.89 16.85l5.58 5.59"
             />
           </SearchIcon>
-          <StyledInput name="keyword" value={keyword} onChange={this.handleOnChange} />
+          <StyledInput
+            name="keyword"
+            value={keyword}
+            placeholder="Search for Movies"
+            onChange={this.handleOnChange}
+          />
+          <RemoveBtn type="button" onClick={this.removeQuery} />
         </StyledSearch>
         {keyword !== '' ? (
           <SearchResult>
