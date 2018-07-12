@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types, max-len, react/destructuring-assignment */
+
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { FetchToServerDetail } from 'lib';
@@ -20,6 +22,13 @@ class Detail extends Component {
   }
 
   componentDidMount() {
+    this.callApi();
+  }
+
+  componentWillReceiveProps() {
+    this.setState({
+      result: null,
+    });
     this.callApi();
   }
 

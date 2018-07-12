@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import StarRatingComponent from 'react-star-rating-component';
+
+import Rating from 'components/Rating';
 
 const StyledMovieItem = styled.li`
   padding: 0 12px;
@@ -117,7 +118,7 @@ const Sysnopsis = styled.span`
   color: #fff;
 `;
 
-const Rating = styled.div`
+const Ratings = styled.div`
   position: absolute;
   font-size: 14px;
   display: flex;
@@ -150,33 +151,12 @@ const MovieItem = ({
           <Runtime>
             {`${runtime} min`}
           </Runtime>
-          <Rating>
+          <Ratings>
             <RatingNumber>
               {rating}
             </RatingNumber>
-            <StarRatingComponent
-              style={{ fontSize: 16 }}
-              name="app6"
-              starColor="#ffb400"
-              emptyStarColor="#ffb400"
-              value={rating / 2}
-              renderStarIcon={(index, value) => (
-                <span>
-                  <i className={index <= value ? 'fas fa-star' : 'far fa-star'} />
-                </span>
-              )}
-              renderStarIconHalf={() => (
-                <span>
-                  <span style={{ position: 'absolute' }}>
-                    <i className="far fa-star" />
-                  </span>
-                  <span>
-                    <i className="fas fa-star-half" />
-                  </span>
-                </span>
-              )}
-            />
-          </Rating>
+            <Rating name="starRating" rating={rating} />
+          </Ratings>
           <Sysnopsis>
             {synopsis}
           </Sysnopsis>
