@@ -138,7 +138,7 @@ const RatingNumber = styled.span`
 `;
 
 const MovieItem = ({
-  poster, title, genres, runtime, synopsis, rating,
+  dataID, poster, title, genres, runtime, synopsis, rating,
 }) => (
   <StyledMovieItem>
     <Movie>
@@ -198,6 +198,7 @@ const MovieItem = ({
 );
 
 MovieItem.propTypes = {
+  dataID: PropTypes.number.isRequired,
   poster: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   genres: PropTypes.arrayOf(PropTypes.string),

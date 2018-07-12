@@ -24,6 +24,11 @@ injectGlobal([
     font-size: 14px;
     font-weight: 400;
   }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
 `,
 ]);
 ReactDOM.render(<Root />, document.getElementById('root'));

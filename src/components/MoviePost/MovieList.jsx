@@ -17,6 +17,7 @@ const MovieList = ({ movies }) => (
       ? movies.map(movie => (
         <MovieItem
           key={movie.id}
+          dataID={movie.id}
           poster={movie.medium_cover_image}
           title={movie.title}
           genres={movie.genres}
