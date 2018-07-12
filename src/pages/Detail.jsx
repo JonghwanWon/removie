@@ -26,7 +26,7 @@ class Detail extends Component {
     });
   };
 
-  callApi = () => FetchToServerDetail(7704, this.setData);
+  callApi = () => FetchToServerDetail(7709, true, true, this.setData);
 
   render() {
     const { result } = this.state;

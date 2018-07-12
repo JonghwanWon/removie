@@ -26,16 +26,19 @@ const FetchToServer = (limit, sort, genre, page, func) => {
     });
 };
 
-const FetchToServerDetail = (id, func) => {
+const FetchToServerDetail = (id, image, cast, func) => {
   if (typeof this.source !== typeof undefined) {
     this.source.cancel('canceled due to new request');
   }
 
   this.source = axios.CancelToken.source();
 
-  return axios(`https://yts.am/api/v2/movie_details.json?movie_id=${id}`, {
-    cancelToken: this.source.token,
-  })
+  return axios(
+    `https://yts.am/api/v2/movie_details.json?movie_id=${id}&with_images=${image}&with_cast=${cast}`,
+    {
+      cancelToken: this.source.token,
+    },
+  )
     .then(result => func(result.data.data))
     .catch((err) => {
       if (axios.isCancel(err)) {
