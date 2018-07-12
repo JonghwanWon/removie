@@ -7,6 +7,9 @@ import MovieDetail from 'components/MovieDetail';
 
 const Page = styled.div`
   margin-top: 240px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 class Detail extends Component {
@@ -30,7 +33,6 @@ class Detail extends Component {
 
   render() {
     const { result } = this.state;
-    console.log(result);
     return (
       <Page>
         {result ? <MovieDetail movie={result} /> : <Spinner2 />}
