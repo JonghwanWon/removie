@@ -8,7 +8,7 @@ const App = () => (
   <Fragment>
     <Header />
     <Route exact path={`${process.env.PUBLIC_URL}/movie_list`} component={List} />
-    <Route path={`${process.env.PUBLIC_URL}/movie_list/detail`} component={Detail} />
+    <Route path={`${process.env.PUBLIC_URL}/movie_list/detail/:dataID`} component={Detail} />
   </Fragment>
 );
 

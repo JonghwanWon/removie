@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { FetchToServerDetail } from 'lib';
+import { Spinner2 } from 'components/Spinner';
 
-const Test = styled.div`
+import MovieDetail from 'components/MovieDetail';
+
+const Page = styled.div`
   margin-top: 240px;
-  font-size: 42px;
-  color: #ececec;
-  text-align: center;
 `;
 
 class Detail extends Component {
   constructor(props) {
     super(props);
-
+    console.log(this.props);
     this.state = {};
   }
 
@@ -26,16 +26,15 @@ class Detail extends Component {
     });
   };
 
-  callApi = () => FetchToServerDetail(7709, true, true, this.setData);
+  callApi = () => FetchToServerDetail(this.props.match.params.dataID, true, true, this.setData);
 
   render() {
     const { result } = this.state;
     console.log(result);
     return (
-      <Test>
-        {result ? result.id : null}
-        {'testRoute'}
-      </Test>
+      <Page>
+        {result ? <MovieDetail movie={result} /> : <Spinner2 />}
+      </Page>
     );
   }
 }

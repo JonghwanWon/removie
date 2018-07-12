@@ -1,11 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-
+import { Link } from 'react-router-dom';
 import StarRatingComponent from 'react-star-rating-component';
 
 const StyledMovieItem = styled.li`
-  flex: 0 0 20%;
   padding: 0 12px;
   margin-bottom: 24px;
 `;
@@ -140,61 +139,67 @@ const RatingNumber = styled.span`
 const MovieItem = ({
   dataID, poster, title, genres, runtime, synopsis, rating,
 }) => (
-  <StyledMovieItem>
-    <Movie>
-      <MovieSubInfo>
-        <Runtime>
-          {`${runtime} min`}
-        </Runtime>
-        <Rating>
-          <RatingNumber>
-            {rating}
-          </RatingNumber>
-          <StarRatingComponent
-            style={{ fontSize: 16 }}
-            name="app6"
-            starColor="#ffb400"
-            emptyStarColor="#ffb400"
-            value={rating / 2}
-            renderStarIcon={(index, value) => (
-              <span>
-                <i className={index <= value ? 'fas fa-star' : 'far fa-star'} />
-              </span>
-            )}
-            renderStarIconHalf={() => (
-              <span>
-                <span style={{ position: 'absolute' }}>
-                  <i className="far fa-star" />
-                </span>
+  <Link
+    to={`/movie_list/detail/${dataID}`}
+    href={`movie_list/detail/${dataID}`}
+    style={{ flex: '0 0 20%' }}
+  >
+    <StyledMovieItem>
+      <Movie>
+        <MovieSubInfo>
+          <Runtime>
+            {`${runtime} min`}
+          </Runtime>
+          <Rating>
+            <RatingNumber>
+              {rating}
+            </RatingNumber>
+            <StarRatingComponent
+              style={{ fontSize: 16 }}
+              name="app6"
+              starColor="#ffb400"
+              emptyStarColor="#ffb400"
+              value={rating / 2}
+              renderStarIcon={(index, value) => (
                 <span>
-                  <i className="fas fa-star-half" />
+                  <i className={index <= value ? 'fas fa-star' : 'far fa-star'} />
                 </span>
-              </span>
-            )}
-          />
-        </Rating>
-        <Sysnopsis>
-          {synopsis}
-        </Sysnopsis>
-        <Overlay className="overlay" />
-        <MoviePoster src={poster} alt={`${title} Poster`} />
-      </MovieSubInfo>
-      <MovieInfo>
-        <MovieTitle>
-          {title}
-        </MovieTitle>
-        {genres ? (
-          <Genres>
-            {genres.map(genre => (
-              <Genre key={Math.random()}>
-                {genre}
-              </Genre>
-            ))}
-          </Genres>
-        ) : null}
-      </MovieInfo>
-    </Movie>
-  </StyledMovieItem>
+              )}
+              renderStarIconHalf={() => (
+                <span>
+                  <span style={{ position: 'absolute' }}>
+                    <i className="far fa-star" />
+                  </span>
+                  <span>
+                    <i className="fas fa-star-half" />
+                  </span>
+                </span>
+              )}
+            />
+          </Rating>
+          <Sysnopsis>
+            {synopsis}
+          </Sysnopsis>
+          <Overlay className="overlay" />
+          <MoviePoster src={poster} alt={`${title} Poster`} />
+        </MovieSubInfo>
+        <MovieInfo>
+          <MovieTitle>
+            {title}
+          </MovieTitle>
+          {genres ? (
+            <Genres>
+              {genres.map(genre => (
+                <Genre key={Math.random()}>
+                  {genre}
+                </Genre>
+              ))}
+            </Genres>
+          ) : null}
+        </MovieInfo>
+      </Movie>
+    </StyledMovieItem>
+  </Link>
 );
 
 MovieItem.propTypes = {
