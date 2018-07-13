@@ -11,6 +11,7 @@ const StyledMovieInfo = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  justify-content: center;
 `;
 
 const Title = styled.h2`
@@ -47,8 +48,9 @@ const Year = styled.span`
   margin-right: 24px;
 `;
 
-const Genres = styled.div`
-  & span {
+const Genres = styled.ul`
+  display: flex;
+  & li {
     padding-right: 8px;
 
     &:last-child {
@@ -146,13 +148,11 @@ const MovieInfo = ({ movie }) => {
           {`${movie.runtime} min`}
         </Runtime>
         <Genres>
-          {movie.genres
-            ? movie.genres.map(genre => (
-              <span key={Math.random()}>
-                {genre}
-              </span>
-            ))
-            : null}
+          {movie.genres ? movie.genres.map(genre => (
+            <li key={Math.random()}>
+              {genre}
+            </li>
+          )) : null}
         </Genres>
       </Info>
       <StyledRating>

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import HeroCover from './HeroCover';
 import MovieInfo from './MovieInfo';
 
-const StyledMovieDetail = styled.div`
+const StyledMovieDetail = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
