@@ -24,11 +24,11 @@ class Detail extends Component {
     this.callApi();
   }
 
-  componentWillReceiveProps() {
-    this.setState({
+  async componentWillReceiveProps() {
+    await this.setState({
       result: null,
     });
-    this.callApi();
+    await this.callApi();
   }
 
   setData = (data) => {

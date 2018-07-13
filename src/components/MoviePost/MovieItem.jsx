@@ -75,6 +75,7 @@ const MovieTitle = styled.h2`
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   word-wrap: break-word;
+  word-break: break-word;
 `;
 
 const Genres = styled.div`
@@ -137,14 +138,13 @@ const RatingNumber = styled.span`
   color: #fff;
 `;
 
+const StyledLink = styled(Link)`
+  flex: 1 0 20%;
+`;
 const MovieItem = ({
   dataID, poster, title, genres, runtime, synopsis, rating,
 }) => (
-  <Link
-    to={`/movie_list/detail/${dataID}`}
-    href={`movie_list/detail/${dataID}`}
-    style={{ flex: '0 0 20%' }}
-  >
+  <StyledLink to={`/movie_list/detail/${dataID}`} href={`movie_list/detail/${dataID}`}>
     <StyledMovieItem>
       <Movie>
         <MovieSubInfo>
@@ -179,7 +179,7 @@ const MovieItem = ({
         </MovieInfo>
       </Movie>
     </StyledMovieItem>
-  </Link>
+  </StyledLink>
 );
 
 MovieItem.propTypes = {

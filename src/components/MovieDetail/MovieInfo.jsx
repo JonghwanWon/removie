@@ -1,3 +1,5 @@
+/* eslint-disable react/forbid-prop-types */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -215,6 +217,8 @@ const MovieInfo = ({ movie }) => {
   );
 };
 
-MovieInfo.propTypes = { movie: PropTypes.object.isRequired }; // eslint-disable-line react/forbid-prop-types, max-len
+MovieInfo.propTypes = {
+  movie: PropTypes.object.isRequired,
+};
 
 export default MovieInfo;

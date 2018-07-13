@@ -1,7 +1,10 @@
+/* eslint-disable react/forbid-prop-types */
+
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
+import { MovieList } from 'components/MoviePost';
 import HeroCover from './HeroCover';
 import MovieInfo from './MovieInfo';
 
@@ -47,8 +50,9 @@ const Images = styled.div`
   display: flex;
   flex-direction: column;
 `;
+const SuggestMovies = styled.div``;
 
-const MovieDetail = ({ movie }) => (
+const MovieDetail = ({ movie, suggest }) => (
   <StyledMovieDetail>
     <HeroCover img={movie.background_image} movieTitle={movie.title} />
     <StyledMovieInfo>
@@ -87,10 +91,18 @@ const MovieDetail = ({ movie }) => (
         />
       </Images>
     </Contents>
+    <SuggestMovies>
+      <MovieList movies={suggest} />
+    </SuggestMovies>
   </StyledMovieDetail>
 );
 MovieDetail.propTypes = {
-  movie: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
+  movie: PropTypes.object.isRequired,
+  suggest: PropTypes.object,
+};
+
+MovieDetail.defaultProps = {
+  suggest: null,
 };
 
 export default MovieDetail;
