@@ -16,7 +16,7 @@ const StyledMovieInfo = styled.div`
 
 const Title = styled.h2`
   font-size: 42px;
-  font-weight: 400;
+  font-weight: 700;
 `;
 
 const Info = styled.div`
@@ -179,34 +179,38 @@ const MovieInfo = ({ movie }) => {
           {movie.description_full}
         </Description>
       </StyledDescription>
-      <StyledCast>
-        <CastTitle>
-          {'Cast'}
-        </CastTitle>
-        <Actor>
-          {movie.cast.map(item => (
-            <ActorProfile key={item.imdb_code}>
-              <ActorName>
-                <strong>
-                  {item.name}
-                </strong>
-                <em>
-                  {` as ${item.character_name}`}
-                </em>
-              </ActorName>
-              {item.url_small_image ? (
-                <ActorImage>
-                  <img
-                    src={item.url_small_image}
-                    alt={`${item.name} thumbnail`}
-                    style={{ display: 'block' }}
-                  />
-                </ActorImage>
-              ) : null}
-            </ActorProfile>
-          ))}
-        </Actor>
-      </StyledCast>
+      {movie.cast ? (
+        <StyledCast>
+          <CastTitle>
+            {'Cast'}
+          </CastTitle>
+          <Actor>
+            {movie.cast.map(item => (
+              <ActorProfile key={item.imdb_code}>
+                <ActorName>
+                  <strong>
+                    {item.name}
+                  </strong>
+                  {item.character_name ? (
+                    <em>
+                      {` as ${item.character_name}`}
+                    </em>
+                  ) : null}
+                </ActorName>
+                {item.url_small_image ? (
+                  <ActorImage>
+                    <img
+                      src={item.url_small_image}
+                      alt={`${item.name} thumbnail`}
+                      style={{ display: 'block' }}
+                    />
+                  </ActorImage>
+                ) : null}
+              </ActorProfile>
+            ))}
+          </Actor>
+        </StyledCast>
+      ) : null}
     </StyledMovieInfo>
   );
 };

@@ -9,6 +9,9 @@ const StyledHeroCover = styled.div`
   width: 100%;
   height: 750px;
   z-index: -1;
+  background: url(${({ img } = this.props) => img});
+  background-size: cover;
+  background-position: center;
   overflow: hidden;
 `;
 
@@ -22,28 +25,18 @@ const HeroCoverOverlay = styled.div`
   z-index: 1;
 `;
 
-const HeroCoverImage = styled.img`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-`;
-
-const HeroCover = ({ img, movieTitle }) => (
-  <StyledHeroCover>
+const HeroCover = ({ img }) => (
+  <StyledHeroCover img={img}>
     <HeroCoverOverlay />
-    <HeroCoverImage src={img} alt={`${movieTitle} background`} />
   </StyledHeroCover>
 );
 
 HeroCover.propTypes = {
   img: PropTypes.string,
-  movieTitle: PropTypes.string,
 };
 
 HeroCover.defaultProps = {
   img: '',
-  movieTitle: '',
 };
 
 export default HeroCover;

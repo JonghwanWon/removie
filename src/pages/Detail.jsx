@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { FetchToServerDetail } from 'lib';
+import { FetchToServerDetail, FetchToServerSuggest } from 'lib';
 import { Spinner2 } from 'components/Spinner';
 
 import MovieDetail from 'components/MovieDetail';
@@ -17,7 +17,6 @@ const Page = styled.div`
 class Detail extends Component {
   constructor(props) {
     super(props);
-    console.log(this.props);
     this.state = {};
   }
 
@@ -38,13 +37,23 @@ class Detail extends Component {
     });
   };
 
-  callApi = () => FetchToServerDetail(this.props.match.params.dataID, true, true, this.setData);
+  setSuggest = (data) => {
+    this.setState({
+      suggest: data.movies,
+    });
+  };
+
+  callApi = async () => {
+    await FetchToServerDetail(this.props.match.params.dataID, true, true, this.setData);
+    await FetchToServerSuggest(this.props.match.params.dataID, this.setSuggest);
+  };
 
   render() {
-    const { result } = this.state;
+    const { result, suggest } = this.state;
+
     return (
       <Page>
-        {result ? <MovieDetail movie={result} /> : <Spinner2 />}
+        {result ? <MovieDetail movie={result} suggest={suggest} /> : <Spinner2 />}
       </Page>
     );
   }

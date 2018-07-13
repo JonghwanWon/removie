@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 import axios from 'axios';
 
 import {
@@ -49,4 +51,22 @@ const FetchToServerDetail = (id, image, cast, func) => {
     });
 };
 
-export { FetchToServer, FetchToServerDetail };
+const FetchToServerSuggest = (id, func) => {
+  if (typeof this.source !== typeof undefined) {
+    this.source.cancel('canceled due to new request');
+  }
+
+  this.source = axios.CancelToken.source();
+
+  return axios(`https://yts.am/api/v2/movie_suggestions.json?movie_id=${id}`, {
+    cancelToken: this.source.token,
+  })
+    .then(result => func(result.data.data))
+    .catch((err) => {
+      if (axios.isCancel(err)) {
+        console.log('Request canceled', err);
+      } else console.log(err);
+    });
+};
+
+export { FetchToServer, FetchToServerDetail, FetchToServerSuggest };

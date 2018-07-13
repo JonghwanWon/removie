@@ -1,3 +1,3 @@
-import { FetchToServer, FetchToServerDetail } from './FetchToServer';
+import { FetchToServer, FetchToServerDetail, FetchToServerSuggest } from './FetchToServer';
 
-export { FetchToServer, FetchToServerDetail };
+export { FetchToServer, FetchToServerDetail, FetchToServerSuggest };

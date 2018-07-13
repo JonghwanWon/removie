@@ -22,16 +22,31 @@ const StyledMovieInfo = styled.div`
 const WrapPoster = styled.div`
   flex: 1;
   padding: 10px 12px;
-  background: #fff;
-  height: 620px;
 `;
 
 const MoviePoster = styled.img`
   display: block;
   width: 100%;
+  border: 10px solid #fff;
 `;
 
-const Trailer = styled.div``;
+const Contents = styled.div`
+  display: flex;
+  width: 80%;
+  height: 500px;
+  margin: 100px 20px 40px;
+  overflow: hidden;
+`;
+
+const Trailer = styled.div`
+  flex: 2.26;
+`;
+
+const Images = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+`;
 
 const MovieDetail = ({ movie }) => (
   <StyledMovieDetail>
@@ -43,22 +58,37 @@ const MovieDetail = ({ movie }) => (
       <MovieInfo movie={movie} />
     </StyledMovieInfo>
 
-    <Trailer>
-      {movie.yt_trailer_code ? (
-        <iframe
-          title={`${movie.title} Trailer`}
-          width="420"
-          height="315"
-          src={`https://www.youtube.com/embed/${movie.yt_trailer_code}`}
+    <Contents>
+      <Trailer>
+        {movie.yt_trailer_code ? (
+          <iframe
+            title={`${movie.title} Trailer`}
+            width="100%"
+            height="100%"
+            src={`https://www.youtube.com/embed/${movie.yt_trailer_code}`}
+          />
+        ) : null}
+      </Trailer>
+      <Images>
+        <img
+          style={{ width: '100%' }}
+          src={movie.large_screenshot_image1}
+          alt={`${movie.title} screenshot-1`}
         />
-      ) : null}
-    </Trailer>
-    <img src={movie.large_screenshot_image1} alt={`${movie.title} screenshot`} />
-    <img src={movie.large_screenshot_image2} alt={`${movie.title} screenshot`} />
-    <img src={movie.large_screenshot_image3} alt={`${movie.title} screenshot`} />
+        <img
+          style={{ width: '100%' }}
+          src={movie.large_screenshot_image2}
+          alt={`${movie.title} screenshot-2`}
+        />
+        <img
+          style={{ width: '100%' }}
+          src={movie.large_screenshot_image3}
+          alt={`${movie.title} screenshot-3`}
+        />
+      </Images>
+    </Contents>
   </StyledMovieDetail>
 );
-
 MovieDetail.propTypes = {
   movie: PropTypes.object.isRequired, // eslint-disable-line react/forbid-prop-types
 };
