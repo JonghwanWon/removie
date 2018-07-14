@@ -4,39 +4,44 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 const StyledImgSlider = styled.div`
-  width: 100%;
-  max-width: 1280px;
-  margin: 0 auto;
+  width: 60%;
+  margin-top: 100px;
+
+  & > img {
+    width: 100%;
+  }
 `;
 
-const ImgSlider = ({ source, title }) => {
+const ImgSlider = ({ ...imgs, movieTitle }) => {
   const settings = {
-    customPaging(i) {
-      return (
-        <a>
-          <img src={source[i]} alt={`${title} screenshot_thumbnail`} style={{ width: '100%' }} />
-        </a>
-      );
-    },
-    dots: true,
-    dotsClass: 'slick-dots slick-thumb',
     infinite: true,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    arrows: false,
+    autoplay: true,
+    pauseOnHover: false,
   };
+
   return (
     <StyledImgSlider>
       <Slider {...settings}>
-        {source.map(img => <img key={Math.random()} src={img} alt={`${title} screenshot`} />)}
+        <img src={imgs.img1} alt={`${movieTitle} screenshot`} />
+        <img src={imgs.img2} alt={`${movieTitle} screenshot`} />
+        <img src={imgs.img3} alt={`${movieTitle} screenshot`} />
       </Slider>
     </StyledImgSlider>
   );
 };
 
 ImgSlider.propTypes = {
-  source: PropTypes.arrayOf(PropTypes.string).isRequired,
-  title: PropTypes.string.isRequired,
+  img1: PropTypes.string,
+  movieTitle: PropTypes.string,
+};
+
+ImgSlider.defaultProps = {
+  img1: '',
+  movieTitle: '',
 };
 
 export default ImgSlider;

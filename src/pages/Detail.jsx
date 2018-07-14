@@ -8,7 +8,7 @@ import { Spinner2 } from 'components/Spinner';
 import MovieDetail from 'components/MovieDetail';
 
 const Page = styled.div`
-  margin-top: 240px;
+  margin-top: 173px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -52,7 +52,7 @@ class Detail extends Component {
     const { result, suggest } = this.state;
 
     return (
-      <Page>
+      <Page id="wrapContents">
         {result ? <MovieDetail movie={result} suggest={suggest} /> : <Spinner2 />}
       </Page>
     );

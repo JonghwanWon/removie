@@ -32,7 +32,7 @@ const StyledSearch = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: #fff;
+  background: rgba(255, 255, 255, 0.97);
 `;
 
 class Header extends Component {
