@@ -2,13 +2,14 @@ import React, { Fragment } from 'react';
 import { Route } from 'react-router-dom';
 
 import Header from 'components/Header';
-import { List, Detail } from 'pages';
+import { Home, List, Detail } from 'pages';
 
 const App = () => (
   <Fragment>
     <Header />
+    <Route exact path={`${process.env.PUBLIC_URL}/`} component={Home} />
     <Route exact path={`${process.env.PUBLIC_URL}/movie_list`} component={List} />
-    <Route exact path={`${process.env.PUBLIC_URL}/movie_list/detail/:dataID`} component={Detail} />
+    <Route exact path={`${process.env.PUBLIC_URL}/detail/:dataID`} component={Detail} />
   </Fragment>
 );
 

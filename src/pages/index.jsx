@@ -1,4 +1,5 @@
 import List from './List';
 import Detail from './Detail';
+import Home from './Home';
 
-export { List, Detail };
+export { Home, List, Detail };

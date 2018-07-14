@@ -113,7 +113,7 @@ const Sysnopsis = styled.span`
   top: 70px;
   padding: 0 24px;
   line-height: 1.4em;
-  -webkit-line-clamp: 15;
+  -webkit-line-clamp: 13;
   -webkit-box-orient: vertical;
   font-size: 13px;
   color: #fff;
@@ -144,7 +144,7 @@ const StyledLink = styled(Link)`
 const MovieItem = ({
   dataID, poster, title, genres, runtime, synopsis, rating,
 }) => (
-  <StyledLink to={`/movie_list/detail/${dataID}`} href={`movie_list/detail/${dataID}`}>
+  <StyledLink to={`/detail/${dataID}`} href={`/detail/${dataID}`}>
     <StyledMovieItem>
       <Movie>
         <MovieSubInfo>
