@@ -81,6 +81,7 @@ const MovieTitle = styled.h2`
 const Genres = styled.div`
   display: flex;
   flex-wrap: wrap;
+  max-width: 300px;
   font-size: 13px;
   color: #808080;
 `;
@@ -139,8 +140,9 @@ const RatingNumber = styled.span`
 `;
 
 const StyledLink = styled(Link)`
-  flex: 1 0 20%;
+  flex: 1 1 20%;
 `;
+
 const MovieItem = ({
   dataID, poster, title, genres, runtime, synopsis, rating,
 }) => (

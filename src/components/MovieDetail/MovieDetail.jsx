@@ -4,14 +4,17 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-import { MovieList } from 'components/MoviePost';
 import HeroCover from './HeroCover';
 import MovieInfo from './MovieInfo';
+import SuggestMovies from './SuggestMovies';
+import MovieInside from './MovieInside';
 
 const StyledMovieDetail = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 1400px;
+  width: 100%;
 `;
 
 const StyledMovieInfo = styled.div`
@@ -33,24 +36,9 @@ const MoviePoster = styled.img`
   border: 10px solid #fff;
 `;
 
-const Contents = styled.div`
-  display: flex;
-  width: 80%;
-  height: 500px;
-  margin: 100px 20px 40px;
-  overflow: hidden;
+const SubMovieInfo = styled.aside`
+  width: 70%;
 `;
-
-const Trailer = styled.div`
-  flex: 2.26;
-`;
-
-const Images = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-`;
-const SuggestMovies = styled.div``;
 
 const MovieDetail = ({ movie, suggest }) => (
   <StyledMovieDetail>
@@ -61,44 +49,21 @@ const MovieDetail = ({ movie, suggest }) => (
       </WrapPoster>
       <MovieInfo movie={movie} />
     </StyledMovieInfo>
-
-    <Contents>
-      <Trailer>
-        {movie.yt_trailer_code ? (
-          <iframe
-            title={`${movie.title} Trailer`}
-            width="100%"
-            height="100%"
-            src={`https://www.youtube.com/embed/${movie.yt_trailer_code}`}
-          />
-        ) : null}
-      </Trailer>
-      <Images>
-        <img
-          style={{ width: '100%' }}
-          src={movie.large_screenshot_image1}
-          alt={`${movie.title} screenshot-1`}
-        />
-        <img
-          style={{ width: '100%' }}
-          src={movie.large_screenshot_image2}
-          alt={`${movie.title} screenshot-2`}
-        />
-        <img
-          style={{ width: '100%' }}
-          src={movie.large_screenshot_image3}
-          alt={`${movie.title} screenshot-3`}
-        />
-      </Images>
-    </Contents>
-    <SuggestMovies>
-      <MovieList movies={suggest} />
-    </SuggestMovies>
+    <SubMovieInfo>
+      <MovieInside
+        movieTitle={movie.title}
+        trailer={movie.yt_trailer_code}
+        img1={movie.large_screenshot_image1 ? movie.large_screenshot_image1 : null}
+        img2={movie.large_screenshot_image2 ? movie.large_screenshot_image2 : null}
+        img3={movie.large_screenshot_image3 ? movie.large_screenshot_image3 : null}
+      />
+      <SuggestMovies movies={suggest} />
+    </SubMovieInfo>
   </StyledMovieDetail>
 );
 MovieDetail.propTypes = {
   movie: PropTypes.object.isRequired,
-  suggest: PropTypes.object,
+  suggest: PropTypes.array,
 };
 
 MovieDetail.defaultProps = {
