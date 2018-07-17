@@ -5,11 +5,11 @@ import {
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 
 import { MovieList } from 'components/MoviePost';
 import { Spinner } from 'components/Spinner';
 import { GenresTag2 } from 'components/GenresTag';
+import Button from 'components/Button';
 import Title from './Title';
 
 const StyledMMP = styled.div`
@@ -19,7 +19,7 @@ const StyledMMP = styled.div`
   justify-content: center;
   width: 100%;
   max-width: 1400px;
-  padding: 96px 0 24px;
+  padding: 96px 0 80px;
   border-bottom: 1px solid #ececec;
 `;
 
@@ -74,14 +74,10 @@ class MainMoviePost extends Component {
         <Title title={title} />
         <GenresTag2 changeGenres={this.changeGenres} />
         {loaded ? <MovieList movies={movies} wrap={false} /> : <Spinner />}
-        <Link
+        <Button
           to={`/movie_list/${sort}&${genre}`}
           href={`/movie_list/${sort}&${genre !== 'all' ? genre : 'all'}`}
-        >
-          <button type="button">
-            {'View More'}
-          </button>
-        </Link>
+        />
       </StyledMMP>
     );
   }
