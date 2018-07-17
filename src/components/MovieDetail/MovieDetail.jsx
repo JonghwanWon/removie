@@ -78,37 +78,48 @@ const PlayIcon = styled.div`
   transform: translate(-35%, -50%);
 `;
 
-const MovieDetail = ({ movie, suggest }) => (
-  <StyledMovieDetail>
-    <HeroCover movie={movie} />
-    {/* https://i.ytimg.com/vi_webp/${movie.yt_trailer_code}/maxresdefault.webp */}
-    <TieBanner img={`https://i.ytimg.com/vi/${movie.yt_trailer_code}/maxresdefault.jpg`}>
-      <TieBannerTitle>
-        {`${movie.title} Movie Trailer`}
-      </TieBannerTitle>
-      <PlayButton>
-        <PlayIcon />
-      </PlayButton>
-      <Overlay />
-    </TieBanner>
-    <ImgSlider
-      img1={movie.large_screenshot_image1}
-      img2={movie.large_screenshot_image2}
-      img3={movie.large_screenshot_image3}
-      movieTitle={movie.movieTitle}
-    />
-    <SubMovieInfo>
-      <SuggestMovies movies={suggest} />
-    </SubMovieInfo>
-    <MovieInside
-      movieTitle={movie.title}
-      trailer={movie.yt_trailer_code}
-      img1={movie.large_screenshot_image1}
-      img2={movie.large_screenshot_image2}
-      img3={movie.large_screenshot_image3}
-    />
-  </StyledMovieDetail>
-);
+const MovieDetail = ({ movie, suggest }) => {
+  const YT_PATH = 'https://i.ytimg.com/vi/';
+  const IMAGE_PATH = `${process.env.PUBLIC_URL}/asset/images/`;
+  return (
+    <StyledMovieDetail>
+      <HeroCover movie={movie} />
+      <TieBanner
+        img={
+          movie.yt_trailer_code
+            ? `${YT_PATH}${movie.yt_trailer_code}/maxresdefault.jpg`
+            : `${IMAGE_PATH}coming-soon.png`
+        }
+        parrallex
+      >
+        <TieBannerTitle>
+          {`${movie.title} Movie Trailer`}
+        </TieBannerTitle>
+        <PlayButton>
+          <PlayIcon />
+        </PlayButton>
+        <Overlay />
+      </TieBanner>
+      <ImgSlider
+        img1={movie.large_screenshot_image1}
+        img2={movie.large_screenshot_image2}
+        img3={movie.large_screenshot_image3}
+        movieTitle={movie.movieTitle}
+      />
+      <SubMovieInfo>
+        <SuggestMovies movies={suggest} />
+      </SubMovieInfo>
+      <MovieInside
+        movieTitle={movie.title}
+        trailer={movie.yt_trailer_code}
+        img1={movie.large_screenshot_image1}
+        img2={movie.large_screenshot_image2}
+        img3={movie.large_screenshot_image3}
+      />
+    </StyledMovieDetail>
+  );
+};
+
 MovieDetail.propTypes = {
   movie: PropTypes.object.isRequired,
   suggest: PropTypes.array,
