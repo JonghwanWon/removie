@@ -66,7 +66,6 @@ class Header extends Component {
 
   onScroll = () => {
     const el = document.querySelector('#topHeader').clientHeight;
-    console.log(el);
     const pageY = window.pageYOffset;
 
     if (pageY > el) {

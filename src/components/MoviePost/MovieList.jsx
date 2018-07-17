@@ -6,13 +6,14 @@ import MovieItem from './MovieItem';
 
 const StyledMovieList = styled.ul`
   display: flex;
-  width: 100%
+  width: 100%;
   flex-wrap: wrap;
+  flex-wrap: ${({ isWrap } = this.props) => (isWrap ? 'wrap' : 'nowrap')};
   margin-bottom: 40px;
 `;
 
-const MovieList = ({ movies }) => (
-  <StyledMovieList>
+const MovieList = ({ movies, wrap }) => (
+  <StyledMovieList isWrap={wrap}>
     {movies
       ? movies.map(movie => (
         <MovieItem
@@ -32,9 +33,11 @@ const MovieList = ({ movies }) => (
 
 MovieList.propTypes = {
   movies: PropTypes.arrayOf(PropTypes.object),
+  wrap: PropTypes.bool,
 };
 
 MovieList.defaultProps = {
   movies: [],
+  wrap: true,
 };
 export default MovieList;

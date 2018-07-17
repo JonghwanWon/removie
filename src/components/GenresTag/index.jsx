@@ -1,3 +1,4 @@
 import GenresTag from './GenresTag';
+import GenresTag2 from './GenresTag2';
 
-export default GenresTag;
+export { GenresTag, GenresTag2 };

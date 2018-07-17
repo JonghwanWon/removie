@@ -52,7 +52,7 @@ const genres = [
 
 const matchGenres = (genre) => {
   if (genre === 'All') {
-    return '';
+    return 'all';
   }
   return genre;
 };

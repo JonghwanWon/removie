@@ -7,6 +7,7 @@ const StyledSpinner = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
+  padding: 150px 0;
 `;
 const Spinner2 = () => (
   <StyledSpinner>

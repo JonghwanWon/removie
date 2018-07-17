@@ -136,7 +136,7 @@ const RatingNumber = styled.span`
 `;
 
 const StyledLink = styled(Link)`
-  flex: 1 1 20%;
+  flex: 1 0 20%;
 `;
 
 const MovieItem = ({

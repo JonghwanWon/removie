@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-// import { FetchToServer } from 'lib';
-// import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+
+import MainMoviePost from 'components/MainMoviePost';
 
 const Page = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 1400px;
-  margin: 250px auto 0;
-  align-items: flex-start;
+  align-items: center;
+  padding-top: 170px;
 `;
 
 class Home extends Component {
@@ -20,25 +18,15 @@ class Home extends Component {
     this.state = {};
   }
 
-  componentDidMount() {}
-
   render() {
     return (
       <Page>
-        <div>
-          {'this is "home" page'}
-        </div>
-        <Link to="/movie_list" href="/movie_list/">
-          <button type="button">
-            {'link test'}
-          </button>
-        </Link>
+        <MainMoviePost limit={30} title="Newest Uploaded" />
+        <MainMoviePost sort="rating" title="Top-Ratings" />
+        <MainMoviePost limit={50} sort="download_count" title="Most Downloads" />
       </Page>
     );
   }
 }
-
-Home.propTypes = {};
-Home.defaultProps = {};
 
 export default Home;

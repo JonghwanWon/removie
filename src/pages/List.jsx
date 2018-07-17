@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Header from 'components/Header';
 import { MoviePost, MoviePostTitle, MoviePostController } from 'components/MoviePost';
 import { Spinner } from 'components/Spinner';
-import GenresTag from 'components/GenresTag';
+import { GenresTag } from 'components/GenresTag';
 
 import { FetchToServer } from 'lib';
 
@@ -21,9 +21,9 @@ class List extends Component {
 
     this.state = {
       result: null,
-      genre: '',
+      genre: this.props.match.params.genre,
       limit: '15',
-      sort: 'download_count',
+      sort: this.props.match.params.sort,
       page: 1,
       loaded: false,
       nextLoaded: false,
