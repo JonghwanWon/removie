@@ -3,13 +3,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-
+import { Parallax } from 'react-parallax';
 import ImgSlider from 'components/ImgSlider';
 import HeroCover from './HeroCover';
 import SuggestMovies from './SuggestMovies';
-import MovieInside from './MovieInside';
 
 const StyledMovieDetail = styled.main`
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -21,20 +21,13 @@ const SubMovieInfo = styled.aside`
   max-width: 1200px;
 `;
 
-const TieBanner = styled.div`
+const ParallaxContent = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: relative;
   width: 100%;
-  max-width: 1920px;
   height: 360px;
-  background: url(${({ img } = this.props) => `${img}`});
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
 `;
 
 const Overlay = styled.div`
@@ -85,22 +78,28 @@ const MovieDetail = ({ movie, suggest }) => {
   return (
     <StyledMovieDetail>
       <HeroCover movie={movie} />
-      <TieBanner
-        img={
-          movie.yt_trailer_code
-            ? `${YT_PATH}${movie.yt_trailer_code}/0.jpg`
-            : `${IMAGE_PATH}coming-soon.png`
-        }
-        parrallex
-      >
-        <TieBannerTitle>
-          {`${movie.title} Movie Trailer`}
-        </TieBannerTitle>
-        <PlayButton>
-          <PlayIcon />
-        </PlayButton>
-        <Overlay />
-      </TieBanner>
+      <div style={{ width: '100%' }}>
+        <Parallax
+          bgImage={
+            movie.yt_trailer_code
+              ? `${YT_PATH}${movie.yt_trailer_code}/0.jpg`
+              : `${IMAGE_PATH}coming-soon.png`
+          }
+          bgWidth="100%"
+          bgHeight="auto"
+          strength={-600}
+        >
+          <ParallaxContent>
+            <TieBannerTitle>
+              {`${movie.title} Movie Trailer`}
+            </TieBannerTitle>
+            <PlayButton>
+              <PlayIcon />
+            </PlayButton>
+            <Overlay />
+          </ParallaxContent>
+        </Parallax>
+      </div>
       <SubMovieInfo>
         <ImgSlider
           img1={movie.large_screenshot_image1}
