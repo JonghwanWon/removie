@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 const StyledImgSlider = styled.div`
-  width: 60%;
+  width: 100%;
   margin-top: 100px;
 
   & > img {

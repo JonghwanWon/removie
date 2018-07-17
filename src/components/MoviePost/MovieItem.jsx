@@ -140,7 +140,15 @@ const StyledLink = styled(Link)`
 `;
 
 const MovieItem = ({
-  dataID, poster, title, genres, runtime, synopsis, rating,
+  dataID,
+  poster,
+  title,
+  genres,
+  runtime,
+  synopsis,
+  rating,
+  longTitle,
+  isLongTitle,
 }) => (
   <StyledLink to={`/detail/${dataID}`} href={`/detail/${dataID}`}>
     <StyledMovieItem>
@@ -163,7 +171,7 @@ const MovieItem = ({
         </MovieSubInfo>
         <MovieInfo>
           <MovieTitle>
-            {title}
+            {isLongTitle ? longTitle : title}
           </MovieTitle>
           {genres ? (
             <Genres>
@@ -188,6 +196,8 @@ MovieItem.propTypes = {
   runtime: PropTypes.number,
   synopsis: PropTypes.string,
   rating: PropTypes.number,
+  longTitle: PropTypes.string,
+  isLongTitle: PropTypes.bool,
 };
 
 MovieItem.defaultProps = {
@@ -195,6 +205,8 @@ MovieItem.defaultProps = {
   runtime: 0,
   synopsis: '',
   rating: 0,
+  longTitle: undefined,
+  isLongTitle: false,
 };
 
 export default MovieItem;

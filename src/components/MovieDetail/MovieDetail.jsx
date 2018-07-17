@@ -17,7 +17,8 @@ const StyledMovieDetail = styled.main`
 `;
 
 const SubMovieInfo = styled.aside`
-  width: 70%;
+  width: 50%;
+  max-width: 1200px;
 `;
 
 const TieBanner = styled.div`
@@ -87,7 +88,7 @@ const MovieDetail = ({ movie, suggest }) => {
       <TieBanner
         img={
           movie.yt_trailer_code
-            ? `${YT_PATH}${movie.yt_trailer_code}/maxresdefault.jpg`
+            ? `${YT_PATH}${movie.yt_trailer_code}/0.jpg`
             : `${IMAGE_PATH}coming-soon.png`
         }
         parrallex
@@ -100,22 +101,15 @@ const MovieDetail = ({ movie, suggest }) => {
         </PlayButton>
         <Overlay />
       </TieBanner>
-      <ImgSlider
-        img1={movie.large_screenshot_image1}
-        img2={movie.large_screenshot_image2}
-        img3={movie.large_screenshot_image3}
-        movieTitle={movie.movieTitle}
-      />
       <SubMovieInfo>
+        <ImgSlider
+          img1={movie.large_screenshot_image1}
+          img2={movie.large_screenshot_image2}
+          img3={movie.large_screenshot_image3}
+          movieTitle={movie.movieTitle}
+        />
         <SuggestMovies movies={suggest} />
       </SubMovieInfo>
-      <MovieInside
-        movieTitle={movie.title}
-        trailer={movie.yt_trailer_code}
-        img1={movie.large_screenshot_image1}
-        img2={movie.large_screenshot_image2}
-        img3={movie.large_screenshot_image3}
-      />
     </StyledMovieDetail>
   );
 };

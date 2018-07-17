@@ -12,7 +12,7 @@ const StyledMovieList = styled.ul`
   margin-bottom: 40px;
 `;
 
-const MovieList = ({ movies, wrap }) => (
+const MovieList = ({ movies, wrap, isLongTitle }) => (
   <StyledMovieList isWrap={wrap}>
     {movies
       ? movies.map(movie => (
@@ -25,6 +25,8 @@ const MovieList = ({ movies, wrap }) => (
           runtime={movie.runtime}
           synopsis={movie.synopsis}
           rating={movie.rating}
+          longTitle={movie.title_long}
+          isLongTitle={isLongTitle}
         />
       ))
       : null}
@@ -34,10 +36,13 @@ const MovieList = ({ movies, wrap }) => (
 MovieList.propTypes = {
   movies: PropTypes.arrayOf(PropTypes.object),
   wrap: PropTypes.bool,
+  isLongTitle: PropTypes.bool,
 };
 
 MovieList.defaultProps = {
   movies: [],
   wrap: true,
+  isLongTitle: false,
 };
+
 export default MovieList;

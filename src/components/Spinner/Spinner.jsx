@@ -9,6 +9,7 @@ const StyledSpinner = styled.div`
   width: 100%;
   padding: 150px 0;
 `;
+
 const Spinner = () => (
   <StyledSpinner>
     <ScaleLoader width={5} color="rgb(237,237,237)" />
