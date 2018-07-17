@@ -15,6 +15,7 @@ const StyledHeader = styled.header`
   margin: 0 auto;
   background: #fff;
   z-index: 9999;
+  border-bottom: 1px solid #ccc;
 `;
 
 const TopHeader = styled.div`
@@ -27,8 +28,9 @@ const TopHeader = styled.div`
 `;
 
 const StyledSearch = styled.div`
-  position: ${({ scroll } = this.props) => (scroll ? 'fixed' : 'relative')};
-  width: 100%;
+  ${({ scrolling } = this.props) => (scrolling
+    ? 'position: fixed; border-bottom: 1px solid #ccc;'
+    : 'position: relative; border-bottom: none;')} width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -40,7 +42,7 @@ class Header extends Component {
     super(props);
 
     this.state = {
-      scroll: false,
+      scrolling: false,
     };
   }
 
@@ -63,31 +65,31 @@ class Header extends Component {
   }
 
   onScroll = () => {
-    const el = document.querySelector('#search');
-    const pageY = window.scrollY;
+    const el = document.querySelector('#topHeader').clientHeight;
+    console.log(el);
+    const pageY = window.pageYOffset;
 
-    if (el.getBoundingClientRect().top <= 0) {
+    if (pageY > el) {
       this.setState({
-        scroll: true,
+        scrolling: true,
       });
     }
     if (pageY <= 100) {
       this.setState({
-        scroll: false,
+        scrolling: false,
       });
     }
   };
 
   render() {
-    const { scroll } = this.state;
-
+    const { scrolling } = this.state;
     return (
       <StyledHeader>
-        <TopHeader>
+        <TopHeader id="topHeader">
           <Logo />
           <Hamburger />
         </TopHeader>
-        <StyledSearch id="search" scroll={scroll}>
+        <StyledSearch scrolling={scrolling}>
           <Search />
         </StyledSearch>
       </StyledHeader>

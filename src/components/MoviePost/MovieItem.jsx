@@ -10,10 +10,6 @@ const StyledMovieItem = styled.li`
   margin-bottom: 24px;
 `;
 
-const Movie = styled.figure`
-  cursor: pointer;
-`;
-
 const MovieSubInfo = styled.div`
   position: relative;
   overflow: hidden;
@@ -148,7 +144,7 @@ const MovieItem = ({
 }) => (
   <StyledLink to={`/detail/${dataID}`} href={`/detail/${dataID}`}>
     <StyledMovieItem>
-      <Movie>
+      <figure>
         <MovieSubInfo>
           <Runtime>
             {`${runtime} min`}
@@ -179,7 +175,7 @@ const MovieItem = ({
             </Genres>
           ) : null}
         </MovieInfo>
-      </Movie>
+      </figure>
     </StyledMovieItem>
   </StyledLink>
 );

@@ -15,7 +15,7 @@ const StyledSearch = styled.div`
   width: 100%;
   max-width: 1400px;
   padding: 16px 0;
-  border-bottom: 1px solid #ccc;
+  border-bottom: ${({ keyword } = this.props) => (keyword !== '' ? '1px solid #efefef;' : 'none')};
 `;
 
 const StyledInput = styled.input`
@@ -30,7 +30,7 @@ const StyledInput = styled.input`
 
 const SearchResult = styled.div`
   max-width: 1400px;
-  padding-top: 80px;
+  padding-top: 40px;
   min-width: 300px;
 `;
 
@@ -141,7 +141,7 @@ class Search extends Component {
 
     return (
       <Fragment>
-        <StyledSearch>
+        <StyledSearch keyword={keyword}>
           <SearchIcon />
           <StyledInput
             name="keyword"

@@ -6,7 +6,7 @@ import MovieItem from './MovieItem';
 
 const StyledMovieList = styled.ul`
   display: flex;
-  flex: 1;
+  width: 100%
   flex-wrap: wrap;
   margin-bottom: 40px;
 `;

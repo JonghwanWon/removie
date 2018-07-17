@@ -52,7 +52,7 @@ class Detail extends Component {
     const { result, suggest } = this.state;
 
     return (
-      <Page id="wrapContents">
+      <Page>
         {result ? <MovieDetail movie={result} suggest={suggest} /> : <Spinner2 />}
       </Page>
     );
