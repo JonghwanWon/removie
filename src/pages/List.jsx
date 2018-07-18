@@ -2,13 +2,15 @@
 
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 
 import Header from 'components/Header';
 import { MoviePost, MoviePostTitle, MoviePostController } from 'components/MoviePost';
 import { Spinner } from 'components/Spinner';
 import { GenresTag } from 'components/GenresTag';
-
-import { FetchToServer } from 'lib';
+import {
+  PATH_BASE, PARAM_LIMIT, PARAM_SORT, PARAM_GENRE, PARAM_PAGE,
+} from 'components/Constant';
 
 const Page = styled.div`
   display: flex;
@@ -36,6 +38,7 @@ class List extends Component {
     this.callApi();
   }
 
+
   shouldComponentUpdate(nextProps, nextState) {
     if (this.props !== nextProps) {
       return true;
@@ -47,9 +50,9 @@ class List extends Component {
   }
 
   componentWillUnmount() {
-    this.callApi();
+    this.source.cancel('canceled due to new request');
   }
-  
+
   setData = (data) => {
     const { movies } = this.state;
     const oldMovies = data.page_number !== 1 ? movies : [];
@@ -75,9 +78,25 @@ class List extends Component {
     this.setState({
       nextLoaded: false,
     });
+    if (typeof this.source !== typeof undefined) {
+      this.source.cancel('canceled due to new request');
+    }
 
-    return FetchToServer(limit, sort, genre, page, this.setData);
-  };
+    this.source = axios.CancelToken.source();
+
+    return axios(
+      `${PATH_BASE}?${PARAM_LIMIT + limit}&${PARAM_SORT + sort}&${PARAM_GENRE + genre}&${PARAM_PAGE + page}}`,
+      { cancelToken: this.source.token },
+    )
+      .then(result => this.setData(result.data.data))
+      .catch((err) => {
+        if (axios.isCancel(err)) {
+          console.log('Request canceled', err);
+        } else {
+          console.log(err);
+        }
+      });
+  }
 
   loadNextPage = async (currentPage) => {
     await this.setState({

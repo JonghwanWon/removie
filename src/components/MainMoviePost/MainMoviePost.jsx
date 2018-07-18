@@ -39,8 +39,7 @@ class MainMoviePost extends Component {
   }
 
   componentWillUnmount() {
-    axios.Cancel(1);
-    axios.Cancel();
+    this.source.cancel('cancel due to new request');
   }
 
   FetchToServer = () => {
@@ -55,7 +54,7 @@ class MainMoviePost extends Component {
 
     return axios(
       `${PATH_BASE}?${PARAM_LIMIT + limit}&${PARAM_SORT + sort}&${PARAM_GENRE + genre}`,
-      { cancelToken: this.source.token, requestID: 1 },
+      { cancelToken: this.source.token },
     )
       .then(result => this.setState({ movies: result.data.data.movies, loaded: true }))
       .catch((err) => {
