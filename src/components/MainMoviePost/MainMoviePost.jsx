@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import {
   PATH_BASE, PARAM_LIMIT, PARAM_SORT, PARAM_GENRE,
 } from 'components/Constant';
@@ -26,7 +26,7 @@ const StyledMMP = styled.div`
 
 const TestArrow = styled.div`
   position: absolute;
-  display: block;
+  display: ${({ moveCount, posibleMove } = this.props) => (moveCount < posibleMove - 1 ? 'block' : 'none')};
   top: 50%;
   right: -30px;
   width: 120px;
@@ -50,6 +50,26 @@ const TestArrow = styled.div`
   }
 `;
 
+const PrevButton = styled(TestArrow)`
+  display: ${({ moveCount } = this.props) => (moveCount !== 0 ? 'block' : 'none')}
+  right: 0;
+  left -30px;
+
+  &:before {
+    border-left: 0;
+    border-right: 20px solid #888;
+    transform: translate(-65%, -50%);
+  }
+`;
+
+const MovieTrack = styled.div`
+  width: 100%;
+  transform: translateX(
+    ${({ moveCount, moveDirection } = this.props) => (moveDirection !== 'next' ? moveCount * -100 : moveCount * 100)}%
+  );
+  transition: transform 0.4s ease-in-out;
+`;
+
 class MainMoviePost extends Component {
   constructor(props) {
     super(props);
@@ -57,11 +77,23 @@ class MainMoviePost extends Component {
     this.state = {
       genre: 'all',
       loaded: false,
+      moveCount: 0,
+      moveDirection: 'next',
     };
   }
 
   componentDidMount() {
     this.FetchToServer();
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.props !== nextProps) {
+      return true;
+    }
+    if (this.state !== nextState) {
+      return true;
+    }
+    return false;
   }
 
   FetchToServer = () => {
@@ -93,14 +125,55 @@ class MainMoviePost extends Component {
     await this.FetchToServer();
   };
 
+  handleNext = () => {
+    this.setState(prevState => ({
+      moveCount: prevState.moveCount + 1,
+      moveDirection: 'next',
+    }));
+    console.log(this.state.moveDirection);
+  };
+
+  handlePrev = () => {
+    this.setState(prevState => ({
+      moveCount: prevState.moveCount - 1,
+      moveDirection: 'prev',
+    }));
+  };
+
   render() {
-    const { title, sort } = this.props;
-    const { genre, movies, loaded } = this.state;
+    const {
+      limit, title, sort, visibleColumn,
+    } = this.props;
+    const {
+      genre, movies, loaded, moveCount, moveDirection,
+    } = this.state;
+    const posibleMove = limit / visibleColumn;
+
     return (
       <StyledMMP>
         <Title title={title} />
         <GenresTag2 changeGenres={this.changeGenres} genre={genre} />
-        {loaded ? <MovieList movies={movies} wrap={false} isLongTitle /> : <Spinner />}
+        {loaded ? (
+          <Fragment>
+            <TestArrow
+              onClick={this.handleNext}
+              posibleMove={posibleMove}
+              moveCount={moveCount}
+              moveDirection={moveDirection}
+            />
+            <PrevButton
+              onClick={this.handlePrev}
+              posibleMove={posibleMove}
+              moveCount={moveCount}
+              moveDirection={moveDirection}
+            />
+            <MovieTrack moveCount={moveCount}>
+              <MovieList movies={movies} wrap={false} isLongTitle visibleColumn={visibleColumn} />
+            </MovieTrack>
+          </Fragment>
+        ) : (
+          <Spinner />
+        )}
         <Button
           to={`/movie_list/${sort}&${genre}`}
           href={`/movie_list/${sort}&${genre !== 'all' ? genre : 'all'}`}
@@ -114,11 +187,13 @@ MainMoviePost.propTypes = {
   title: PropTypes.string.isRequired,
   limit: PropTypes.number,
   sort: PropTypes.string,
+  visibleColumn: PropTypes.number,
 };
 
 MainMoviePost.defaultProps = {
   limit: 20,
   sort: 'date_added',
+  visibleColumn: 5,
 };
 
 export default MainMoviePost;

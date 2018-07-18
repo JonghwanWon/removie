@@ -21,7 +21,7 @@ class Home extends Component {
   render() {
     return (
       <Page>
-        <MainMoviePost limit={30} title="Newest Uploaded" />
+        <MainMoviePost limit={30} title="Newest Uploaded" visibleColumn={5} />
         <MainMoviePost sort="rating" title="Top-Ratings" />
         <MainMoviePost limit={50} sort="download_count" title="Most Downloads" />
       </Page>
