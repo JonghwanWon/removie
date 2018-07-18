@@ -13,6 +13,7 @@ import Button from 'components/Button';
 import Title from './Title';
 
 const StyledMMP = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -21,6 +22,32 @@ const StyledMMP = styled.div`
   max-width: 1400px;
   padding: 96px 0 80px;
   border-bottom: 1px solid #ececec;
+`;
+
+const TestArrow = styled.div`
+  position: absolute;
+  display: block;
+  top: 50%;
+  right: -30px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.8);
+  transform: translateY(-50%);
+  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.15);
+  cursor: pointer
+  z-index: 100;
+
+  &:before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    border-left: 20px solid #888;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    transform: translate(-35%, -50%);
+  }
 `;
 
 class MainMoviePost extends Component {
