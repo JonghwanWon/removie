@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import {
   PATH_BASE, PARAM_LIMIT, PARAM_SORT, PARAM_GENRE,
 } from 'components/Constant';
@@ -6,10 +6,10 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { MovieList } from 'components/MoviePost';
 import { Spinner } from 'components/Spinner';
 import { GenresTag2 } from 'components/GenresTag';
 import Button from 'components/Button';
+import MovieListSlider from 'components/MovieListSlider';
 import Title from './Title';
 
 const StyledMMP = styled.div`
@@ -24,52 +24,6 @@ const StyledMMP = styled.div`
   border-bottom: 1px solid #ececec;
 `;
 
-const TestArrow = styled.div`
-  position: absolute;
-  display: ${({ moveCount, posibleMove } = this.props) => (moveCount < posibleMove - 1 ? 'block' : 'none')};
-  top: 50%;
-  right: -30px;
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.8);
-  transform: translateY(-50%);
-  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.15);
-  cursor: pointer
-  z-index: 100;
-
-  &:before {
-    content: '';
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    border-left: 20px solid #888;
-    border-top: 15px solid transparent;
-    border-bottom: 15px solid transparent;
-    transform: translate(-35%, -50%);
-  }
-`;
-
-const PrevButton = styled(TestArrow)`
-  display: ${({ moveCount } = this.props) => (moveCount !== 0 ? 'block' : 'none')}
-  right: 0;
-  left -30px;
-
-  &:before {
-    border-left: 0;
-    border-right: 20px solid #888;
-    transform: translate(-65%, -50%);
-  }
-`;
-
-const MovieTrack = styled.div`
-  width: 100%;
-  transform: translateX(
-    ${({ moveCount, moveDirection } = this.props) => (moveDirection !== 'next' ? moveCount * -100 : moveCount * 100)}%
-  );
-  transition: transform 0.4s ease-in-out;
-`;
-
 class MainMoviePost extends Component {
   constructor(props) {
     super(props);
@@ -77,8 +31,6 @@ class MainMoviePost extends Component {
     this.state = {
       genre: 'all',
       loaded: false,
-      moveCount: 0,
-      moveDirection: 'next',
     };
   }
 
@@ -86,14 +38,9 @@ class MainMoviePost extends Component {
     this.FetchToServer();
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    if (this.props !== nextProps) {
-      return true;
-    }
-    if (this.state !== nextState) {
-      return true;
-    }
-    return false;
+  componentWillUnmount() {
+    axios.Cancel(1);
+    axios.Cancel();
   }
 
   FetchToServer = () => {
@@ -108,7 +55,7 @@ class MainMoviePost extends Component {
 
     return axios(
       `${PATH_BASE}?${PARAM_LIMIT + limit}&${PARAM_SORT + sort}&${PARAM_GENRE + genre}`,
-      { cancelToken: this.source.token },
+      { cancelToken: this.source.token, requestID: 1 },
     )
       .then(result => this.setState({ movies: result.data.data.movies, loaded: true }))
       .catch((err) => {
@@ -130,7 +77,6 @@ class MainMoviePost extends Component {
       moveCount: prevState.moveCount + 1,
       moveDirection: 'next',
     }));
-    console.log(this.state.moveDirection);
   };
 
   handlePrev = () => {
@@ -144,33 +90,14 @@ class MainMoviePost extends Component {
     const {
       limit, title, sort, visibleColumn,
     } = this.props;
-    const {
-      genre, movies, loaded, moveCount, moveDirection,
-    } = this.state;
-    const posibleMove = limit / visibleColumn;
+    const { genre, movies, loaded } = this.state;
 
     return (
       <StyledMMP>
         <Title title={title} />
         <GenresTag2 changeGenres={this.changeGenres} genre={genre} />
         {loaded ? (
-          <Fragment>
-            <TestArrow
-              onClick={this.handleNext}
-              posibleMove={posibleMove}
-              moveCount={moveCount}
-              moveDirection={moveDirection}
-            />
-            <PrevButton
-              onClick={this.handlePrev}
-              posibleMove={posibleMove}
-              moveCount={moveCount}
-              moveDirection={moveDirection}
-            />
-            <MovieTrack moveCount={moveCount}>
-              <MovieList movies={movies} wrap={false} isLongTitle visibleColumn={visibleColumn} />
-            </MovieTrack>
-          </Fragment>
+          <MovieListSlider limit={limit} visibleColumn={visibleColumn} movies={movies} />
         ) : (
           <Spinner />
         )}

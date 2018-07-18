@@ -46,6 +46,10 @@ class List extends Component {
     return false;
   }
 
+  componentWillUnmount() {
+    this.callApi();
+  }
+  
   setData = (data) => {
     const { movies } = this.state;
     const oldMovies = data.page_number !== 1 ? movies : [];
