@@ -72,7 +72,7 @@ class MainMoviePost extends Component {
     return (
       <StyledMMP>
         <Title title={title} />
-        <GenresTag2 changeGenres={this.changeGenres} />
+        <GenresTag2 changeGenres={this.changeGenres} genre={genre} />
         {loaded ? <MovieList movies={movies} wrap={false} isLongTitle /> : <Spinner />}
         <Button
           to={`/movie_list/${sort}&${genre}`}

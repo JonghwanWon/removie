@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types, react/destructuring-assignment */
+
 import React, { Component } from 'react';
 import styled from 'styled-components';
 
@@ -21,9 +23,9 @@ class List extends Component {
 
     this.state = {
       result: null,
-      genre: this.props.match.params.genre,
+      genre: this.props.match.params.genre || 'all',
       limit: '15',
-      sort: this.props.match.params.sort,
+      sort: this.props.match.params.sort || 'download_count',
       page: 1,
       loaded: false,
       nextLoaded: false,

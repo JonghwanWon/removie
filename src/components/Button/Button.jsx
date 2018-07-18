@@ -6,10 +6,11 @@ import { Link } from 'react-router-dom';
 const StyledButton = styled.button.attrs({
   type: 'button',
 })`
-  padding: 16px 48px;
+  padding: 20px 48px;
   border: 1px solid #242424;
   border-radius: 10px;
-  font-weight: 400;
+  font-weight: 300;
+  font-size: 16px;
   color: #242424;
   transition: all 0.2s ease-in-out;
   background: transparent;

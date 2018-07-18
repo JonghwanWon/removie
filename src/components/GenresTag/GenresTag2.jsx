@@ -84,11 +84,15 @@ class GenresTag2 extends Component {
 
   render() {
     const { categories } = this.state;
-    const { changeGenres } = this.props;
+    const { changeGenres, genre } = this.props;
     return (
       <StyledLabelButton>
         {categories.map(category => (
-          <Label key={category.id} onClick={() => changeGenres(category.sort)}>
+          <Label
+            key={category.id}
+            onClick={() => changeGenres(category.sort)}
+            style={genre !== category.label.toLowerCase() ? null : { borderColor: '#242424' }}
+          >
             <Dot color={category.dotColor} />
             {category.label}
           </Label>
@@ -100,10 +104,12 @@ class GenresTag2 extends Component {
 
 GenresTag2.propTypes = {
   changeGenres: PropTypes.func,
+  genre: PropTypes.string,
 };
 
 GenresTag2.defaultProps = {
   changeGenres: null,
+  genre: '',
 };
 
 export default GenresTag2;
