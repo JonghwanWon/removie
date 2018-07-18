@@ -6,6 +6,10 @@ import {
   PATH_BASE, PARAM_LIMIT, PARAM_SORT, PARAM_GENRE, PARAM_PAGE,
 } from 'components/Constant';
 
+const movieListApi = (limit, sort) => fetch(`${PATH_BASE}?${PARAM_LIMIT + limit}&${PARAM_SORT + sort}`)
+  .then(response => response.json())
+  .then(json => json.data);
+
 const FetchToServer = (limit, sort, genre, page, func) => {
   if (typeof this.source !== typeof undefined) {
     this.source.cancel('canceled due to new request');
@@ -69,4 +73,6 @@ const FetchToServerSuggest = (id, func) => {
     });
 };
 
-export { FetchToServer, FetchToServerDetail, FetchToServerSuggest };
+export {
+  FetchToServer, FetchToServerDetail, FetchToServerSuggest, movieListApi,
+};

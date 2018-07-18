@@ -1,3 +1,10 @@
-import { FetchToServer, FetchToServerDetail, FetchToServerSuggest } from './FetchToServer';
+import {
+  FetchToServer,
+  FetchToServerDetail,
+  FetchToServerSuggest,
+  movieListApi,
+} from './FetchToServer';
 
-export { FetchToServer, FetchToServerDetail, FetchToServerSuggest };
+export {
+  FetchToServer, FetchToServerDetail, FetchToServerSuggest, movieListApi,
+};
