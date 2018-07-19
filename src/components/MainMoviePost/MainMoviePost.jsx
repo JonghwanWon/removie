@@ -101,8 +101,8 @@ class MainMoviePost extends Component {
           <Spinner />
         )}
         <Button
-          to={`/movie_list/${sort}&${genre}`}
-          href={`/movie_list/${sort}&${genre !== 'all' ? genre : 'all'}`}
+          to={`${process.env.PUBLIC_URL}/movie_list/${sort}&${genre}`}
+          href={`${process.env.PUBLIC_URL}/movie_list/${sort}&${genre !== 'all' ? genre : 'all'}`}
         />
       </StyledMMP>
     );

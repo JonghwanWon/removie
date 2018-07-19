@@ -150,7 +150,10 @@ const MovieItem = ({
   longTitle,
   isLongTitle,
 }) => (
-  <StyledLink to={`/detail/${dataID}`} href={`/detail/${dataID}`}>
+  <StyledLink
+    to={`${process.env.PUBLIC_URL}/detail/${dataID}`}
+    href={`${process.env.PUBLIC_URL}/detail/${dataID}`}
+  >
     <StyledMovieItem>
       <figure>
         <MovieSubInfo>

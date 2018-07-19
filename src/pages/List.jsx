@@ -162,7 +162,6 @@ class List extends Component {
         ) : (
           <Spinner />
         )}
-        {console.log(this.state)}
       </Page>
     );
   }

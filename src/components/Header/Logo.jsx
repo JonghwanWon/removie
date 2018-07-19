@@ -27,7 +27,7 @@ const LogoImg = styled.img`
 
 const Logo = () => (
   <LogoSection>
-    <Link to={`${process.env.PUBLIC_URL}/`} href="/">
+    <Link to={`${process.env.PUBLIC_URL}/`} href={`${process.env.PUBLIC_URL}/`}>
       <LogoLink>
         <LogoImg src={`${imagesFolder}do2folio.png`} alt="dodo_logo" />
       </LogoLink>

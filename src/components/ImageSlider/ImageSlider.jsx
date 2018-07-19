@@ -230,8 +230,8 @@ class ImageSlider extends Component {
           </Synopsis>
           <Button
             value="View More"
-            to={`/detail/${movies[matchIndex(currentSlide)].id}`}
-            href={`/detail/${movies[matchIndex(currentSlide)].id}`}
+            to={`${process.env.PUBLIC_URL}/detail/${movies[matchIndex(currentSlide)].id}`}
+            href={`${process.env.PUBLIC_URL}/detail/${movies[matchIndex(currentSlide)].id}`}
           />
         </StyledMovieInfo>
       </StyledImageSlider>
