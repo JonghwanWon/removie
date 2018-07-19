@@ -11,6 +11,12 @@ import {
 import Button from 'components/Button';
 
 const StyledMovieHero = styled.div`
+  width: 100%;
+  position: relative;
+  margin-bottom: 80px;
+`;
+
+const SlideItem = styled.div`
   position: relative;
   display: flex !important;
   justify-content: center;
@@ -184,7 +190,7 @@ class MovieHero extends Component {
     };
 
     return (
-      <div style={{ width: '100%', position: 'relative' }}>
+      <StyledMovieHero>
         <NextButton
           onClick={() => this.next()}
           onMouseEnter={this.pause}
@@ -203,7 +209,7 @@ class MovieHero extends Component {
             {...settings}
           >
             {movies.map(movie => (
-              <StyledMovieHero key={movie.id}>
+              <SlideItem key={movie.id}>
                 <Overlay />
                 <MovieInfo>
                   <Title>
@@ -229,11 +235,11 @@ class MovieHero extends Component {
                     theme="ghost"
                   />
                 </MovieInfo>
-              </StyledMovieHero>
+              </SlideItem>
             ))}
           </Slider>
         ) : null}
-      </div>
+      </StyledMovieHero>
     );
   }
 }
