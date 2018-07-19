@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import BrowserDetection from 'react-browser-detection';
 
 import MainMoviePost from 'components/MainMoviePost';
 import MainPost from 'components/MainPost';
+import MovieHero from 'components/MovieHero';
+
+const browserHandler = {
+  chrome: () => <MainPost limit={7} sort="like_count" />,
+  default: null,
+};
 
 const Page = styled.div`
   display: flex;
@@ -22,9 +29,12 @@ class Home extends Component {
   render() {
     return (
       <Page>
-        <MainPost limit={7} sort="like_count" />
+        <MovieHero limit={5} sort="like_count" />
         <MainMoviePost limit={30} title="Newest Uploaded" visibleColumn={5} />
         <MainMoviePost sort="rating" title="Top-Ratings" />
+        <BrowserDetection>
+          {browserHandler}
+        </BrowserDetection>
         <MainMoviePost limit={50} sort="download_count" title="Most Downloads" />
       </Page>
     );

@@ -85,7 +85,7 @@ class List extends Component {
     this.source = axios.CancelToken.source();
 
     return axios(
-      `${PATH_BASE}?${PARAM_LIMIT + limit}&${PARAM_SORT + sort}&${PARAM_GENRE + genre}&${PARAM_PAGE + page}}`,
+      `${PATH_BASE}?${PARAM_LIMIT + limit}&${PARAM_SORT + sort}&${PARAM_GENRE + genre}&${PARAM_PAGE + page}`,
       { cancelToken: this.source.token },
     )
       .then(result => this.setData(result.data.data))
