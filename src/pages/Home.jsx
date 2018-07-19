@@ -29,12 +29,12 @@ class Home extends Component {
   render() {
     return (
       <Page>
-        <MovieHero limit={5} sort="like_count" />
-        <MainMoviePost limit={30} title="Newest Uploaded" visibleColumn={5} />
-        <MainMoviePost sort="rating" title="Top-Ratings" />
+        <MovieHero limit={5} sort="download_count" page={8} />
         <BrowserDetection>
           {browserHandler}
         </BrowserDetection>
+        <MainMoviePost limit={30} title="Newest Uploaded" visibleColumn={5} />
+        <MainMoviePost sort="rating" title="Top-Ratings" />
         <MainMoviePost limit={50} sort="download_count" title="Most Downloads" />
       </Page>
     );

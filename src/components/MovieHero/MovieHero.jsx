@@ -2,26 +2,30 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import Slider from 'react-slick';
+import { Parallax } from 'react-parallax';
 
-import { PATH_BASE, PARAM_LIMIT, PARAM_SORT } from 'components/Constant';
+import {
+  PATH_BASE, PARAM_LIMIT, PARAM_SORT, PARAM_PAGE,
+} from 'components/Constant';
 import Button from 'components/Button';
 
 const StyledMovieHero = styled.div`
   position: relative;
-  display: flex;
+  display: flex !important;
   justify-content: center;
   width: 100%;
   height: 660px;
   overflow: hidden;
 `;
 
-const BackgroundImage = styled.img`
+const ParallaxImage = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  display: block;
   width: 100%;
-  z-index: -1;
+  height: 100%;
+  z-index: -10;
 `;
 
 const MovieInfo = styled.div`
@@ -40,13 +44,75 @@ const Title = styled.h2`
   margin-bottom: 24px;
 `;
 
+const Overlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: -1;
+`;
+
 const Synopsis = styled.p`
+  display: -webkit-box;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  word-wrap: break-word;
+  line-height: 1.8em;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+
   margin-bottom: 36px;
   font-size: 16px;
   font-weight: 300;
-  color: #ccc;
+  color: #efefef;
   text-align: center;
-  line-height: 1.6;
+`;
+
+const NextButton = styled.div`
+  width: 300px;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  z-index: 10;
+  cursor: pointer;
+
+  &:before {
+    position: absolute;
+    content: '';
+    top: 50%;
+    left: 30%;
+    width: 60px;
+    height: 1px;
+    background: #fff;
+  }
+  &:after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    content: '';
+    border-right: 2px solid #fff;
+    border-top: 2px solid #fff;
+    transform: translate(-50%, -50%) rotate(45deg);
+    transform-origin: center;
+  }
+`;
+
+const PrevButton = styled(NextButton)`
+  right: auto;
+  left: 0;
+  &:before {
+    left: auto;
+    right: 30%;
+  }
+  &:after {
+    transform: translate(-50%, -50%) rotate(-135deg);
+  }
 `;
 
 class MovieHero extends Component {
@@ -67,7 +133,7 @@ class MovieHero extends Component {
   }
 
   callApi = async () => {
-    const { limit, sort } = this.props;
+    const { limit, sort, page } = this.props;
 
     if (typeof this.source !== typeof undefined) {
       this.source.cancel('canceled due to new request');
@@ -75,7 +141,7 @@ class MovieHero extends Component {
 
     this.source = axios.CancelToken.source();
 
-    return axios(`${PATH_BASE}?${PARAM_LIMIT + limit}&${PARAM_SORT + sort}`, {
+    return axios(`${PATH_BASE}?${PARAM_LIMIT + limit}&${PARAM_SORT + sort}&${PARAM_PAGE}${page}`, {
       cancelToken: this.source.token,
     })
       .then(result => this.setState({ movies: result.data.data.movies }))
@@ -88,32 +154,86 @@ class MovieHero extends Component {
       });
   };
 
+  pause = () => {
+    this.slider.slickPause();
+  };
+
+  play = () => {
+    this.slider.slickPlay();
+  };
+
+  next = () => {
+    this.slider.slickNext();
+  };
+
+  previous = () => {
+    this.slider.slickPrev();
+  };
+
   render() {
     const { movies } = this.state;
-    console.log(movies);
+
+    const settings = {
+      infinite: true,
+      speed: 500,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      arrows: false,
+      autoplay: true,
+      pauseOnHover: true,
+    };
+
     return (
-      <StyledMovieHero>
+      <div style={{ width: '100%', position: 'relative' }}>
+        <NextButton
+          onClick={() => this.next()}
+          onMouseEnter={this.pause}
+          onMouseLeave={this.play}
+        />
+        <PrevButton
+          onClick={() => this.previous()}
+          onMouseEnter={this.pause}
+          onMouseLeave={this.play}
+        />
         {movies ? (
-          <MovieInfo>
-            <Title>
-              {movies[0].title}
-            </Title>
-            <Synopsis>
-              {movies[0].synopsis}
-            </Synopsis>
-            <BackgroundImage
-              src={movies[0].background_image}
-              alt={`${movies[0].title} background image`}
-            />
-            <Button
-              value="View More"
-              to={`${process.env.PUBLIC_URL}/detail/${movies[0].id}`}
-              href={`${process.env.PUBLIC_URL}/detail/${movies[0].id}`}
-              theme="ghost"
-            />
-          </MovieInfo>
+          <Slider
+            ref={(c) => {
+              this.slider = c;
+            }}
+            {...settings}
+          >
+            {movies.map(movie => (
+              <StyledMovieHero key={movie.id}>
+                <Overlay />
+                <MovieInfo>
+                  <Title>
+                    {movie.title}
+                  </Title>
+                  <Synopsis>
+                    {movie.synopsis}
+                  </Synopsis>
+                  <ParallaxImage>
+                    <Parallax
+                      bgImage={movie.background_image}
+                      bgImageAlt={`${movie.title} cover`}
+                      bgWidth="100%"
+                      bgHeight="auto"
+                      strength={500}
+                      style={{ height: '100%' }}
+                    />
+                  </ParallaxImage>
+                  <Button
+                    value="View More"
+                    to={`${process.env.PUBLIC_URL}/detail/${movie.id}`}
+                    href={`${process.env.PUBLIC_URL}/detail/${movie.id}`}
+                    theme="ghost"
+                  />
+                </MovieInfo>
+              </StyledMovieHero>
+            ))}
+          </Slider>
         ) : null}
-      </StyledMovieHero>
+      </div>
     );
   }
 }
