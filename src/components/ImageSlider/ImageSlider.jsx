@@ -28,6 +28,10 @@ const SlideList = styled.ul`
   flex-wrap: nowrap;
   list-style: none;
 
+  @media ${device.desktop} {
+    width: 60%;
+  }
+
   @media ${device.laptop} {
     width: 70%;
     margin-bottom: 80px;
@@ -108,6 +112,10 @@ const StyledMovieInfo = styled.div`
   transition: ${({ sliding } = this.props) => (sliding ? 'none' : 'all 0.5s ease-in-out')};
   transform: ${({ sliding } = this.props) => (sliding ? 'translateY(3%)' : 'translateY(0)')};
   opacity: ${({ sliding } = this.props) => (sliding ? '0' : '1')};
+
+  @media ${device.desktop} {
+    width: 40%;
+  }
 
   @media ${device.laptop} {
     width: 85%;
