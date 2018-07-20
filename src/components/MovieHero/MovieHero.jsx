@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import Slider from 'react-slick';
-import { Parallax } from 'react-parallax';
 
 import {
   PATH_BASE, PARAM_LIMIT, PARAM_SORT, PARAM_PAGE,
 } from 'components/Constant';
+import device from 'response';
 import Button from 'components/Button';
 
 const StyledMovieHero = styled.div`
@@ -23,12 +23,24 @@ const SlideItem = styled.div`
   width: 100%;
   height: 660px;
   overflow: hidden;
+
+  @media ${device.laptopL} {
+    height: 540px;
+  }
+
+  @media ${device.tablet} {
+    height: 480px;
+  }
 `;
 
-const ParallaxImage = styled.div`
+const BackgroundImage = styled.div`
   position: absolute;
   top: 0;
   left: 0;
+  background: url(${({ poster } = this.props) => `${poster}`});
+  background-repeat: norepeat;
+  background-position: center;
+  background-size: cover;
   width: 100%;
   height: 100%;
   z-index: -10;
@@ -41,6 +53,10 @@ const MovieInfo = styled.div`
   align-items: center;
   max-width: 960px;
   margin-bottom: 80px;
+
+  @media ${device.laptopL} {
+    max-width: 60%;
+  }
 `;
 
 const Title = styled.h2`
@@ -48,6 +64,13 @@ const Title = styled.h2`
   font-weight: 900;
   color: #fff;
   margin-bottom: 24px;
+
+  @media ${device.tablet} {
+    font-size: 36px;
+  }
+  @media ${device.mobileL} {
+    font-size: 32px;
+  }
 `;
 
 const Overlay = styled.div`
@@ -74,10 +97,14 @@ const Synopsis = styled.p`
   font-weight: 300;
   color: #efefef;
   text-align: center;
+
+  @media ${device.mobileL} {
+    font-size: 14px;
+  }
 `;
 
 const NextButton = styled.div`
-  width: 300px;
+  width: 15%;
   height: 100%;
   position: absolute;
   top: 50%;
@@ -91,7 +118,7 @@ const NextButton = styled.div`
     content: '';
     top: 50%;
     left: 30%;
-    width: 60px;
+    width: 20%;
     height: 1px;
     background: #fff;
   }
@@ -218,16 +245,7 @@ class MovieHero extends Component {
                   <Synopsis>
                     {movie.synopsis}
                   </Synopsis>
-                  <ParallaxImage>
-                    <Parallax
-                      bgImage={movie.background_image}
-                      bgImageAlt={`${movie.title} cover`}
-                      bgWidth="100%"
-                      bgHeight="auto"
-                      strength={500}
-                      style={{ height: '100%' }}
-                    />
-                  </ParallaxImage>
+                  <BackgroundImage poster={movie.background_image} />
                   <Button
                     value="View More"
                     to={`${process.env.PUBLIC_URL}/detail/${movie.id}`}

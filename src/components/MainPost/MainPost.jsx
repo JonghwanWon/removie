@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import ImageSlider from 'components/ImageSlider';
 import { Spinner } from 'components/Spinner';
 import { movieListApi } from 'lib';
+import device from 'response';
 
 const StyledMainPost = styled.div`
   width: 100%;
@@ -14,6 +15,15 @@ const StyledMainPost = styled.div`
   align-items: center;
   max-width: 1400px
   margin: 80px auto 50px;
+
+  @media ${device.laptop} {
+    height: 800px;
+  }
+
+  @media ${device.mobileL} {
+    height: 480px;
+    margin:0;
+  }
 `;
 
 class MainPost extends Component {
