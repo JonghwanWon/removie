@@ -86,14 +86,12 @@ class MainMoviePost extends Component {
   handleNext = () => {
     this.setState(prevState => ({
       moveCount: prevState.moveCount + 1,
-      moveDirection: 'next',
     }));
   };
 
   handlePrev = () => {
     this.setState(prevState => ({
       moveCount: prevState.moveCount - 1,
-      moveDirection: 'prev',
     }));
   };
 

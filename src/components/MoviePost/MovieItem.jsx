@@ -21,6 +21,21 @@ const MovieSubInfo = styled.div`
     z-index: 30;
     transition: opacity 0.2s linear;
   }
+
+  &:hover {
+    .overlay {
+      opacity: 1;
+    }
+    img {
+      transform: scale(1.05);
+    }
+    span {
+      opacity: 1;
+    }
+    div {
+      opacity: 1;
+    }
+  }
 `;
 
 const Overlay = styled.div`
