@@ -10,7 +10,7 @@ import {
 import device from 'response';
 import Button from 'components/Button';
 
-const StyledMovieHero = styled.div`
+const StyledMovieHero = styled.section`
   width: 100%;
   position: relative;
   margin-bottom: 80px;

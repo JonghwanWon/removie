@@ -19,6 +19,7 @@ injectGlobal([
   }
 
   body {
+    background: #f9f9f9;
     overflow-x: hidden;
     font-family: 'Open Sans', sans-serif;
     font-size: 14px;

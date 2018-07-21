@@ -10,10 +10,11 @@ import device from 'response';
 import { Spinner } from 'components/Spinner';
 import { GenresTag2 } from 'components/GenresTag';
 import Button from 'components/Button';
-import MovieListSlider from 'components/MovieListSlider';
+import MovieSlider from 'components/MovieSlider';
+
 import Title from './Title';
 
-const Page = styled.div`
+const Page = styled.section`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -97,7 +98,7 @@ class MainMoviePost extends Component {
 
   render() {
     const {
-      limit, title, sort, visibleColumn,
+      title, sort,
     } = this.props;
     const { genre, movies, loaded } = this.state;
 
@@ -105,11 +106,9 @@ class MainMoviePost extends Component {
       <Page>
         <Title title={title} />
         <GenresTag2 changeGenres={this.changeGenres} genre={genre} />
-        {loaded ? (
-          <MovieListSlider limit={limit} visibleColumn={visibleColumn} movies={movies} />
-        ) : (
-          <Spinner />
-        )}
+        {loaded
+          ? <MovieSlider movies={movies} /> : <Spinner />
+        }
         <Button
           to={`${process.env.PUBLIC_URL}/movie_list/${sort}&${genre}`}
           href={`${process.env.PUBLIC_URL}/movie_list/${sort}&${genre !== 'all' ? genre : 'all'}`}
@@ -123,13 +122,11 @@ MainMoviePost.propTypes = {
   title: PropTypes.string.isRequired,
   limit: PropTypes.number,
   sort: PropTypes.string,
-  visibleColumn: PropTypes.number,
 };
 
 MainMoviePost.defaultProps = {
   limit: 20,
   sort: 'date_added',
-  visibleColumn: 5,
 };
 
 export default MainMoviePost;
