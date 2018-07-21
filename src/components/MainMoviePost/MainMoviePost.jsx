@@ -6,13 +6,14 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+import device from 'response';
 import { Spinner } from 'components/Spinner';
 import { GenresTag2 } from 'components/GenresTag';
 import Button from 'components/Button';
 import MovieListSlider from 'components/MovieListSlider';
 import Title from './Title';
 
-const StyledMMP = styled.div`
+const Page = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -22,6 +23,17 @@ const StyledMMP = styled.div`
   max-width: 1400px;
   padding: 96px 0 80px;
   border-bottom: 1px solid #ececec;
+
+  @media (max-width: 1600px) {
+    max-width: 1280px;
+  }
+  
+  @media ${device.laptopL} {
+    max-width: 80%;
+  }
+  @media ${device.table} {
+    padding: 72px 0 80px;
+  }
 `;
 
 class MainMoviePost extends Component {
@@ -92,7 +104,7 @@ class MainMoviePost extends Component {
     const { genre, movies, loaded } = this.state;
 
     return (
-      <StyledMMP>
+      <Page>
         <Title title={title} />
         <GenresTag2 changeGenres={this.changeGenres} genre={genre} />
         {loaded ? (
@@ -104,7 +116,7 @@ class MainMoviePost extends Component {
           to={`${process.env.PUBLIC_URL}/movie_list/${sort}&${genre}`}
           href={`${process.env.PUBLIC_URL}/movie_list/${sort}&${genre !== 'all' ? genre : 'all'}`}
         />
-      </StyledMMP>
+      </Page>
     );
   }
 }

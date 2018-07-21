@@ -8,7 +8,9 @@ font-weight: 300;
 margin: 0;
 margin-bottom: 40px;
 color #242424;
+text-align:center;
 `;
+
 const Title = ({ title }) => (
   <StyledTitle>
     {title}

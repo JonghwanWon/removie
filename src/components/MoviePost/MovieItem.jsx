@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
+import device from 'response';
 import Rating from 'components/Rating';
 
 const StyledMovieItem = styled.li`
@@ -20,21 +21,6 @@ const MovieSubInfo = styled.div`
     z-index: 30;
     transition: opacity 0.2s linear;
   }
-
-  &:hover {
-    .overlay {
-      background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.45));
-    }
-    img {
-      transform: scale(1.05);
-    }
-    span {
-      opacity: 1;
-    }
-    div {
-      opacity: 1;
-    }
-  }
 `;
 
 const Overlay = styled.div`
@@ -43,8 +29,9 @@ const Overlay = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background: transparent;
-  transition: all 0.2s ease-in-out;
+  background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.45));
+  opacity: 0;
+  transition: opacity 0.2s ease;
   z-index: 10;
 `;
 
@@ -137,6 +124,22 @@ const RatingNumber = styled.span`
 
 const StyledLink = styled(Link)`
   flex: 1 0 20%;
+
+  @media ${device.laptopL} {
+    flex: 1 0 25%;
+  }
+
+  @media (max-width: 1280px) {
+    flex: 1 0 33.3%;
+  }
+
+  @media (max-width: 1024px) {
+    flex: 1 0 50%;
+  }
+
+  @media ${device.mobileL} {
+    flex: 1 0 100%;
+  }
 `;
 
 const MovieItem = ({
@@ -169,7 +172,7 @@ const MovieItem = ({
           <Sysnopsis>
             {synopsis}
           </Sysnopsis>
-          <Overlay className="overlay" />
+          <Overlay />
           <MoviePoster src={poster} alt={`${title} Poster`} />
         </MovieSubInfo>
         <MovieInfo>

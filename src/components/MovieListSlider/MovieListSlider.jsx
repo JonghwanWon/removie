@@ -4,13 +4,14 @@ import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
+import device from 'response';
 import { MovieList } from 'components/MoviePost';
 
 const NextButton = styled.div`
 position: absolute;
-display: ${({ moveCount, posibleMove } = this.props) => (moveCount < posibleMove - 1 ? 'block' : 'none')};
+display: block;
 top: 50%;
-right: -80px;
+right: -60px;
 width: 120px;
 height: 120px;
 border-radius: 50%;
@@ -30,25 +31,33 @@ z-index: 100;
   border-bottom: 15px solid transparent;
   transform: translate(-35%, -50%);
 }
+
+@media ${device.laptopL} {
+  top: 65%;
+  right: -5%;
+}
 `;
 
 const PrevButton = styled(NextButton)`
-display: ${({ moveCount } = this.props) => (moveCount !== 0 ? 'block' : 'none')}
+display: block;
 right: 0;
-left -80px;
+left -60px;
 
 &:before {
   border-left: 0;
   border-right: 20px solid #888;
   transform: translate(-65%, -50%);
 }
+
+@media ${device.laptopL} {
+  top: 65%;
+  left: -5%;
+}
 `;
 
 const MovieTrack = styled.div`
   width: 100%;
-  transform: translateX(
-    ${({ moveCount, moveDirection } = this.props) => (moveDirection === 'next' ? moveCount * 100 : moveCount * -100)}%
-  );
+  transform: translateX(${({ moveCount } = this.props) => moveCount * -100}%);
   transition: transform 0.4s ease-in-out;
 `;
 
@@ -58,42 +67,29 @@ class MovieListSlider extends Component {
 
     this.state = {
       moveCount: 0,
-      moveDirection: 'next',
     };
   }
 
   handleNext = () => {
     this.setState(prevState => ({
       moveCount: prevState.moveCount + 1,
-      moveDirection: 'next',
     }));
   };
 
   handlePrev = () => {
     this.setState(prevState => ({
       moveCount: prevState.moveCount - 1,
-      moveDirection: 'prev',
     }));
   };
 
   render() {
     const { limit, visibleColumn, movies } = this.props;
-    const { moveCount, moveDirection } = this.state;
+    const { moveCount } = this.state;
     const posibleMove = limit / visibleColumn;
     return (
       <Fragment>
-        <NextButton
-          onClick={this.handleNext}
-          posibleMove={posibleMove}
-          moveCount={moveCount}
-          moveDirection={moveDirection}
-        />
-        <PrevButton
-          onClick={this.handlePrev}
-          posibleMove={posibleMove}
-          moveCount={moveCount}
-          moveDirection={moveDirection}
-        />
+        {moveCount < posibleMove - 1 ? <NextButton onClick={this.handleNext} /> : null}
+        {moveCount !== 0 ? <PrevButton onClick={this.handlePrev} /> : null}
         <MovieTrack moveCount={moveCount}>
           <MovieList movies={movies} wrap={false} isLongTitle visibleColumn={visibleColumn} />
         </MovieTrack>
