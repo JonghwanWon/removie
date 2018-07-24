@@ -2,8 +2,8 @@
 
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { FetchToServerDetail, FetchToServerSuggest } from 'lib';
 import { Spinner2 } from 'components/Spinner';
+import axios from 'axios';
 
 import MovieDetail from 'components/MovieDetail';
 
@@ -31,21 +31,59 @@ class Detail extends Component {
     await this.callApi();
   }
 
-  setData = (data) => {
-    this.setState({
-      result: data.movie,
-    });
-  };
-
-  setSuggest = (data) => {
-    this.setState({
-      suggest: data.movies,
-    });
-  };
+  componentWillUnmount() {
+    this.source.cancel('canceled due to new request');
+  }
 
   callApi = async () => {
-    await FetchToServerDetail(this.props.match.params.dataID, true, true, this.setData);
-    await FetchToServerSuggest(this.props.match.params.dataID, this.setSuggest);
+    await this.callDetailApi();
+    await this.callSuggestApi();
+  };
+
+  callSuggestApi = () => {
+    const id = this.props.match.params.dataID;
+    if (typeof this.source !== typeof undefined) {
+      this.source.cancel('canceled due to new request');
+    }
+
+    this.source = axios.CancelToken.source();
+
+    return axios(`https://yts.am/api/v2/movie_suggestions.json?movie_id=${id}`, {
+      cancelToken: this.source.token,
+    })
+      .then(result => this.setState({ suggest: result.data.data.movies }))
+      .catch((err) => {
+        if (axios.isCancel(err)) {
+          console.log('Request canceled', err);
+        } else console.log(err);
+      });
+  };
+
+  callDetailApi = () => {
+    const id = this.props.match.params.dataID;
+    const image = true;
+    const cast = true;
+
+    if (typeof this.source !== typeof undefined) {
+      this.source.cancel('canceled due to new request');
+    }
+
+    this.source = axios.CancelToken.source();
+
+    return axios(
+      `https://yts.am/api/v2/movie_details.json?movie_id=${id}&with_images=${image}&with_cast=${cast}`,
+      {
+        cancelToken: this.source.token,
+      },
+    )
+      .then(result => this.setState({ result: result.data.data.movie }))
+      .catch((err) => {
+        if (axios.isCancel(err)) {
+          console.log('Request canceled', err);
+        } else {
+          console.log(err);
+        }
+      });
   };
 
   render() {
