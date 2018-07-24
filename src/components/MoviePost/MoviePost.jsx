@@ -2,8 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
+import device from 'response';
 import { Spinner2 } from 'components/Spinner';
-import MovieList from './MovieList';
+import MovieList from 'components/MovieList';
 
 const StyledMoviePost = styled.div`
   display: flex;
@@ -13,6 +14,10 @@ const StyledMoviePost = styled.div`
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
+
+  @media ${device.laptopL} {
+    width: 90%;
+  }
 `;
 
 const Button = styled.button`
@@ -36,7 +41,7 @@ const MoviePost = ({
   movies, page, loadNextPage, nextLoaded,
 }) => (
   <StyledMoviePost>
-    <MovieList movies={movies} />
+    <MovieList movies={movies} renderType="list" />
     {nextLoaded ? (
       <Button type="button" onClick={() => loadNextPage(page)}>
         {'Read More'}

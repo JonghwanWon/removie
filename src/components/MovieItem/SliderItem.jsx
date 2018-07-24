@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-const StyledMovieItem = styled.div`
+const StyledSliderItem = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -65,10 +65,6 @@ const Genre = styled.span`
   }
 `;
 
-const StyledLink = styled(Link)`
-  margin-bottom: 30px;
-`;
-
 const RatingNumber = styled.span`
   color: #f7b731;
   font-size: 13px;
@@ -80,9 +76,9 @@ const Ratings = styled.div`
   align-items: center;
 `;
 
-const MovieItem = ({ movie }) => (
-  <StyledLink to={`${process.env.PUBLIC_URL}/detail/${movie.id}`}>
-    <StyledMovieItem key={movie.id}>
+const SliderItem = ({ movie }) => (
+  <Link to={`${process.env.PUBLIC_URL}/detail/${movie.id}`}>
+    <StyledSliderItem key={movie.id}>
       <WrapPoster>
         <Poster src={movie.medium_cover_image} alt={`${movie.title} Poster`} />
       </WrapPoster>
@@ -113,12 +109,12 @@ const MovieItem = ({ movie }) => (
           </RatingNumber>
         </Ratings>
       </Info>
-    </StyledMovieItem>
-  </StyledLink>
+    </StyledSliderItem>
+  </Link>
 );
 
-MovieItem.propTypes = {
+SliderItem.propTypes = {
   movie: PropTypes.object.isRequired,
 };
 
-export default MovieItem;
+export default SliderItem;

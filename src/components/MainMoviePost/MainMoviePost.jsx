@@ -10,7 +10,7 @@ import device from 'response';
 import { Spinner } from 'components/Spinner';
 import { GenresTag2 } from 'components/GenresTag';
 import Button from 'components/Button';
-import MovieSlider from 'components/MovieSlider';
+import MovieList from 'components/MovieList';
 
 import Title from './Title';
 
@@ -107,7 +107,7 @@ class MainMoviePost extends Component {
         <Title title={title} />
         <GenresTag2 changeGenres={this.changeGenres} genre={genre} />
         {loaded
-          ? <MovieSlider movies={movies} limit={limit} /> : <Spinner />
+          ? <MovieList movies={movies} limit={limit} renderType="slider" /> : <Spinner />
         }
         <Button
           to={`${process.env.PUBLIC_URL}/movie_list/${sort}&${genre}`}

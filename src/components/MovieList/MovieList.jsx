@@ -4,15 +4,16 @@ import React, { Component } from 'react';
 import Slider from 'react-slick';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import MovieItem from './MovieItem';
+import { SliderItem, ListItem } from 'components/MovieItem';
 
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 
-const StyledMovieSlider = styled.ul`
+const StyledMovieList = styled.ul`
   position: relative;
   width: 100%;
   margin-bottom: 24px;
+  ${({ renderType } = this.props) => (renderType === 'list' ? 'display: flex; flex-wrap: wrap;' : null)};
 `;
 
 const NextButton = styled.div`
@@ -80,7 +81,7 @@ const PrevArrow = (props) => {
   return <PrevButton onClick={onClick} />;
 };
 
-class MovieSlider extends Component {
+class MovieList extends Component {
   render() {
     const settings = {
       speed: 500,
@@ -115,26 +116,33 @@ class MovieSlider extends Component {
       ],
     };
 
-    const { movies } = this.props;
+    const { movies, renderType } = this.props;
 
-    return (
-      <StyledMovieSlider>
-        <Slider
-          {...settings}
-          ref={(c) => {
-            this.slider = c;
-          }}
-        >
-          {movies ? movies.map(movie => <MovieItem movie={movie} key={movie.id} />) : null}
-        </Slider>
-      </StyledMovieSlider>
-    );
+    return movies ? (
+      <StyledMovieList renderType={renderType}>
+        {renderType === 'slider' ? (
+          <Slider
+            {...settings}
+            ref={(c) => {
+              this.slider = c;
+            }}
+          >
+            {movies.map(movie => <SliderItem movie={movie} key={movie.id} />)}
+          </Slider>
+        ) : null}
+
+        {renderType === 'list'
+          ? movies.map(movie => <ListItem movie={movie} key={movie.id} />)
+          : null}
+      </StyledMovieList>
+    ) : null;
   }
 }
 
-MovieSlider.propTypes = {
+MovieList.propTypes = {
   movies: PropTypes.array.isRequired,
   limit: PropTypes.number.isRequired,
+  renderType: PropTypes.string.isRequired,
 };
 
-export default MovieSlider;
+export default MovieList;
