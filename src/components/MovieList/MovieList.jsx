@@ -141,7 +141,6 @@ class MovieList extends Component {
 
 MovieList.propTypes = {
   movies: PropTypes.array.isRequired,
-  limit: PropTypes.number.isRequired,
   renderType: PropTypes.string.isRequired,
 };
 
