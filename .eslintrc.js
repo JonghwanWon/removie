@@ -1,22 +1,23 @@
-const path = require("path");
+const path = require('path');
 
 module.exports = {
-  parser: "babel-eslint",
-  extends: "airbnb",
-  plugins: ["react", "jsx-a11y", "import"],
+  parser: 'babel-eslint',
+  extends: 'airbnb',
+  plugins: ['react', 'jsx-a11y', 'import'],
   rules: {
-    "react/jsx-filename-extension": 0,
-    "no-nested-ternary": 0
+    'react/jsx-filename-extension': 0,
+    'no-nested-ternary': 0,
+    'no-console': 0,
   },
   settings: {
-    "import/resolver": {
+    'import/resolver': {
       node: {
-        paths: [path.resolve(__dirname, "./src")]
-      }
-    }
+        paths: [path.resolve(__dirname, './src')],
+      },
+    },
   },
   env: {
     browser: true,
-    jasmine: true
-  }
+    jasmine: true,
+  },
 };

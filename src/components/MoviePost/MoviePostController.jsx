@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-import DropDown from './DropDown';
+import DropDown from 'components/DropDown';
 
 const StyledController = styled.div`
   display: flex;
@@ -25,7 +25,6 @@ const SortButton = styled.button.attrs({
   border: none;
   background: transparent;
   color: rgb(36, 36, 36);
-  transition: border 0.2s linear;
   font-size: 14px;
   font-weight: 300;
 
@@ -69,7 +68,25 @@ const sorts = [
   { id: 4, by: 'download_count', value: 'Most Downloads' },
 ];
 
-const MoviePostController = ({ choiceSort, selectedSort }) => (
+const genres = [
+  { id: 0, title: 'All' },
+  { id: 1, title: 'Comedy' },
+  { id: 2, title: 'Sci-Fi' },
+  { id: 3, title: 'Horror' },
+  { id: 4, title: 'Romance' },
+  { id: 5, title: 'Action' },
+  { id: 6, title: 'Thriller' },
+  { id: 7, title: 'Drama' },
+  { id: 8, title: 'Mystery' },
+  { id: 9, title: 'Crime' },
+  { id: 10, title: 'Animation' },
+  { id: 11, title: 'Adventure' },
+  { id: 12, title: 'Fantasy' },
+];
+
+const MoviePostController = ({
+  choiceSort, selectedSort, choiceGenre, selectedGenre,
+}) => (
   <StyledController>
     {sorts.map(
       sort => (sort.by !== selectedSort ? (
@@ -82,17 +99,20 @@ const MoviePostController = ({ choiceSort, selectedSort }) => (
         </ActiveSortButton>
       )),
     )}
-    <DropDown />
+    <DropDown choiceGenre={choiceGenre} headerTitle={selectedGenre} genres={genres} />
   </StyledController>
 );
 
 MoviePostController.propTypes = {
   choiceSort: PropTypes.func,
+  choiceGenre: PropTypes.func,
   selectedSort: PropTypes.string.isRequired,
+  selectedGenre: PropTypes.string.isRequired,
 };
 
 MoviePostController.defaultProps = {
   choiceSort: null,
+  choiceGenre: null,
 };
 
 export default MoviePostController;

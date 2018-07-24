@@ -13,7 +13,7 @@ const StyledTitle = styled.h2`
 
 const MoviePostTitle = ({ genre }) => (
   <StyledTitle>
-    {genre !== 'all' ? `${genre} Movies` : 'Choose your favorite movie genre'}
+    {genre && `${genre} Movies`}
   </StyledTitle>
 );
 

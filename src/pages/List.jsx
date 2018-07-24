@@ -7,7 +7,6 @@ import axios from 'axios';
 import Header from 'components/Header';
 import { MoviePost, MoviePostTitle, MoviePostController } from 'components/MoviePost';
 import { Spinner } from 'components/Spinner';
-import { GenresTag } from 'components/GenresTag';
 import {
   PATH_BASE, PARAM_LIMIT, PARAM_SORT, PARAM_GENRE, PARAM_PAGE,
 } from 'components/Constant';
@@ -25,9 +24,9 @@ class List extends Component {
 
     this.state = {
       result: null,
-      genre: this.props.match.params.genre || 'all',
+      genre: this.props.match.params.genre || 'All',
       limit: '15',
-      sort: this.props.match.params.sort || 'download_count',
+      sort: this.props.match.params.sort || 'date_added',
       page: 1,
       loaded: false,
       nextLoaded: false,
@@ -72,9 +71,14 @@ class List extends Component {
 
   callApi = async () => {
     const {
-      genre, sort, limit, page,
+      sort, limit, page,
     } = this.state;
 
+    let { genre } = this.state;
+
+    if (genre === 'All') {
+      genre = '';
+    }
     this.setState({
       nextLoaded: false,
     });
@@ -149,8 +153,12 @@ class List extends Component {
       <Page>
         <Header />
         <MoviePostTitle genre={genre} />
-        <GenresTag choiceGenre={this.choiceGenre} selectedGenre={genre} />
-        <MoviePostController choiceSort={this.choiceSort} selectedSort={sort} />
+        <MoviePostController
+          choiceSort={this.choiceSort}
+          selectedSort={sort}
+          choiceGenre={this.choiceGenre}
+          selectedGenre={genre}
+        />
         {loaded ? (
           <MoviePost
             movies={movies}
