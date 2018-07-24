@@ -8,6 +8,12 @@ import registerServiceWorker from './registerServiceWorker';
 
 injectGlobal([
   `
+  html {
+    position: relative;
+    overflow-x: hidden;
+    height: 100%;
+    -webkit-overflow-scrolling: touch;
+  }
   * {
     padding: 0;
     margin: 0;
@@ -19,11 +25,15 @@ injectGlobal([
   }
 
   body {
+    position: relative;
+    height: 100%;
     background: #f9f9f9;
     overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
     font-family: 'Open Sans', sans-serif;
     font-size: 14px;
     font-weight: 400;
+    
   }
 
   a {

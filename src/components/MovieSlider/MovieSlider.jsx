@@ -81,30 +81,6 @@ const PrevArrow = (props) => {
 };
 
 class MovieSlider extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      currentSlide: 0,
-    };
-  }
-
-  next = () => {
-    const { currentSlide } = this.state;
-    this.slider.slickNext();
-    this.setState({
-      currentSlide: currentSlide + 1,
-    });
-  };
-
-  prev = () => {
-    const { currentSlide } = this.state;
-    this.slider.slickPrev();
-    this.setState({
-      currentSlide: currentSlide - 1,
-    });
-  };
-
   render() {
     const settings = {
       speed: 500,
@@ -130,7 +106,11 @@ class MovieSlider extends Component {
         },
         {
           breakpoint: 425,
-          settings: { slidesToShow: 1.5, slidesToScroll: 1.5, arrows: false },
+          settings: {
+            slidesToShow: 1.5,
+            slidesToScroll: 1.5,
+            arrows: false,
+          },
         },
       ],
     };
