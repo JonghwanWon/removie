@@ -37,7 +37,6 @@ const Info = styled.div`
 `;
 
 const Title = styled.h2`
-  margin-bottom: 6px;
   font-weight: 300;
   font-size: 21px;
   line-height: 1.4em;

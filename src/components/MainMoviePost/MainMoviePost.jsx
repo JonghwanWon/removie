@@ -98,7 +98,7 @@ class MainMoviePost extends Component {
 
   render() {
     const {
-      title, sort,
+      title, sort, limit,
     } = this.props;
     const { genre, movies, loaded } = this.state;
 
@@ -107,7 +107,7 @@ class MainMoviePost extends Component {
         <Title title={title} />
         <GenresTag2 changeGenres={this.changeGenres} genre={genre} />
         {loaded
-          ? <MovieSlider movies={movies} /> : <Spinner />
+          ? <MovieSlider movies={movies} limit={limit} /> : <Spinner />
         }
         <Button
           to={`${process.env.PUBLIC_URL}/movie_list/${sort}&${genre}`}

@@ -4,6 +4,9 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import Slider from 'react-slick';
 
+import 'slick-carousel/slick/slick-theme.css';
+import 'slick-carousel/slick/slick.css';
+
 import {
   PATH_BASE, PARAM_LIMIT, PARAM_SORT, PARAM_PAGE,
 } from 'components/Constant';
