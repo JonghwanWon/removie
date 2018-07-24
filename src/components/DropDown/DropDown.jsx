@@ -122,9 +122,9 @@ class DropDown extends Component {
 }
 
 DropDown.propTypes = {
-  choiceGenre: PropTypes.string.isRequired,
+  choiceGenre: PropTypes.func.isRequired,
   headerTitle: PropTypes.string.isRequired,
-  genres: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
+  genres: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default DropDown;
