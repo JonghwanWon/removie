@@ -37,6 +37,13 @@ const Poster = styled.img`
 const Info = styled.div`
   width: 100%;
   padding: 12px 8px;
+
+  @media ${device.mobileL} {
+    padding: 16px 24px;
+    background: #fff;
+    border: 1px solid #eee;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  }
 `;
 
 const Title = styled.h2`
@@ -50,6 +57,10 @@ const Title = styled.h2`
   -webkit-box-orient: vertical;
   word-wrap: break-word;
   word-break: break-word;
+
+  @media ${device.mobileL} {
+    font-size: 24px;
+  }
 `;
 
 const Genres = styled.div`
@@ -57,6 +68,10 @@ const Genres = styled.div`
   flex-wrap: wrap;
   font-size: 13px;
   color: #808080;
+
+  @media ${device.mobileL} {
+    font-size: 15px;
+  }
 `;
 
 const Genre = styled.span`
@@ -93,12 +108,20 @@ const RatingNumber = styled.span`
   color: #f7b731;
   font-size: 13px;
   margin-left: 4px;
+
+  @media ${device.mobileL} {
+    font-size: 15px;
+  }
 `;
 
 const Ratings = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 4px;
+
+  @media ${device.mobileL} {
+    font-size: 15px;
+  }
 `;
 
 const Synopsis = styled.p`

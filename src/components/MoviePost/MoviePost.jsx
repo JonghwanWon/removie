@@ -18,6 +18,10 @@ const StyledMoviePost = styled.div`
   @media ${device.laptopL} {
     width: 90%;
   }
+
+  @media ${device.mobileL} {
+    width: 80%;
+  }
 `;
 
 const Button = styled.button`
