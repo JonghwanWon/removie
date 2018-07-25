@@ -84,7 +84,7 @@ const Overlay = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.35);
+  background: rgba(0, 0, 0, 0.6);
   z-index: -1;
 `;
 
@@ -96,6 +96,7 @@ const Synopsis = styled.p`
   line-height: 1.8em;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
+  height: 5em;
 
   margin-bottom: 36px;
   font-size: 16px;
@@ -152,6 +153,14 @@ const PrevButton = styled(NextButton)`
     transform: translate(-50%, -50%) rotate(-135deg);
   }
 `;
+
+const moviePosters = [
+  { poster: 'https://images8.alphacoders.com/598/598990.jpg' },
+  { poster: 'https://images8.alphacoders.com/778/778695.jpg' },
+  { poster: 'https://images2.alphacoders.com/705/705102.jpg' },
+  { poster: 'https://images.alphacoders.com/560/thumb-1920-560734.jpg' },
+  { poster: 'https://images7.alphacoders.com/855/thumb-1920-855790.jpg' },
+];
 
 class MovieHero extends Component {
   constructor(props) {
@@ -240,7 +249,7 @@ class MovieHero extends Component {
             }}
             {...settings}
           >
-            {movies.map(movie => (
+            {movies.map((movie, index) => (
               <SlideItem key={movie.id}>
                 <Overlay />
                 <MovieInfo>
@@ -250,7 +259,7 @@ class MovieHero extends Component {
                   <Synopsis>
                     {movie.synopsis}
                   </Synopsis>
-                  <BackgroundImage poster={movie.background_image} />
+                  <BackgroundImage poster={moviePosters[index].poster} />
                   <Button
                     value="View More"
                     to={`${process.env.PUBLIC_URL}/detail/${movie.id}`}
