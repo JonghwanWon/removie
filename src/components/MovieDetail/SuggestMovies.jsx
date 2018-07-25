@@ -4,7 +4,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { MovieList } from 'components/MoviePost';
+import device from 'response';
+import MovieList from 'components/MovieList';
 
 const StyledSuggest = styled.div`
   width: 100%;
@@ -12,6 +13,10 @@ const StyledSuggest = styled.div`
   flex-direction: column;
   align-items: flex-start;
   margin-top: 64px;
+
+  @media ${device.laptop} {
+    width: 80%;
+  }
 `;
 
 const Heading = styled.h3`
@@ -26,7 +31,7 @@ const SuggestMovies = ({ movies }) => (
     <Heading>
       {'Suggest Movies'}
     </Heading>
-    <MovieList movies={movies} />
+    <MovieList movies={movies} renderType="list" />
   </StyledSuggest>
 );
 

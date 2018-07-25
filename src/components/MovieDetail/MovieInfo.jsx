@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import Rating from 'components/Rating';
+import device from 'response';
 
 const StyledMovieInfo = styled.div`
   flex: 2;
@@ -14,16 +15,27 @@ const StyledMovieInfo = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
+
+  @media ${device.laptop} {
+    margin-left: 0;
+    margin-top: 40px;
+  }
 `;
 
 const Title = styled.h2`
   font-size: 42px;
-  font-weight: 700;
+  font-weight: 600;
+
+  @media ${device.mobileL} {
+    font-size: 28px;
+  }
 `;
 
 const Info = styled.div`
   display: flex;
+  align-items: center;
   margin-top: 16px;
+  text-align: center;
   font-size: 14px;
 
   & > * {
@@ -52,11 +64,19 @@ const Year = styled.span`
 
 const Genres = styled.ul`
   display: flex;
+  flex-wrap: wrap;
+
   & li {
     padding-right: 8px;
 
     &:last-child {
       padding-right: 0;
+    }
+  }
+
+  @media ${device.mobileL} {
+    & li {
+      margin-bottom: 4px;
     }
   }
 `;
@@ -110,6 +130,10 @@ const CastTitle = styled(DescriptionTitle)``;
 const Actor = styled.div`
   display: flex;
   flex-wrap: wrap;
+
+  @media ${device.mobileL} {
+    flex-direction: column;
+  }
 `;
 
 const ActorProfile = styled.div`
@@ -147,7 +171,7 @@ const MovieInfo = ({ movie }) => {
           {movie.year}
         </Year>
         <Runtime>
-          {`${movie.runtime} min`}
+          {`${parseInt(movie.runtime / 60, 10)}h ${movie.runtime % 60}m`}
         </Runtime>
         <Genres>
           {movie.genres ? movie.genres.map(genre => (

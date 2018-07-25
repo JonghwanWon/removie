@@ -3,12 +3,18 @@ import Slider from 'react-slick';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
+import device from 'response';
+
 const StyledImgSlider = styled.div`
   width: 100%;
-  margin-top: 100px;
+  margin-top: 60px;
 
   & > img {
     width: 100%;
+  }
+
+  @media ${device.laptop} {
+    margin-top: 32px;
   }
 `;
 

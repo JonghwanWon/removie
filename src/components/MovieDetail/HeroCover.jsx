@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+import device from 'response';
 import MovieInfo from './MovieInfo';
 
 const StyledHeroCover = styled.div`
@@ -43,6 +44,10 @@ const StyledMovieInfo = styled.div`
   max-width: 1400px;
   padding: 0 50px;
   align-items: center;
+
+  @media ${device.laptop} {
+    flex-direction: column;
+  }
 `;
 
 const WrapPoster = styled.div`
