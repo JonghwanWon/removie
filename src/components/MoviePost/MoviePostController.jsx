@@ -6,9 +6,8 @@ import DropDown from 'components/DropDown';
 
 const StyledController = styled.div`
   display: flex;
-  flex-direction: row;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-end;
   width: 100%;
   max-width: 1400px;
   margin-bottom: 40px;

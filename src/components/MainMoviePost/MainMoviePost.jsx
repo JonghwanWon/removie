@@ -8,10 +8,9 @@ import styled from 'styled-components';
 
 import device from 'response';
 import { Spinner } from 'components/Spinner';
-import { GenresTag2 } from 'components/GenresTag';
 import Button from 'components/Button';
 import MovieList from 'components/MovieList';
-
+import GenresTag from './GenresTag';
 import Title from './Title';
 
 const Page = styled.section`
@@ -42,7 +41,7 @@ class MainMoviePost extends Component {
     super(props);
 
     this.state = {
-      genre: 'all',
+      genre: 'All',
       loaded: false,
     };
   }
@@ -57,8 +56,11 @@ class MainMoviePost extends Component {
 
   FetchToServer = () => {
     const { limit, sort } = this.props;
-    const { genre } = this.state;
+    let { genre } = this.state;
 
+    if (genre === 'All') {
+      genre = '';
+    }
     if (typeof this.source !== typeof undefined) {
       this.source.cancel('canceled due to new request');
     }
@@ -84,18 +86,6 @@ class MainMoviePost extends Component {
     await this.FetchToServer();
   };
 
-  handleNext = () => {
-    this.setState(prevState => ({
-      moveCount: prevState.moveCount + 1,
-    }));
-  };
-
-  handlePrev = () => {
-    this.setState(prevState => ({
-      moveCount: prevState.moveCount - 1,
-    }));
-  };
-
   render() {
     const {
       title, sort, limit,
@@ -105,13 +95,13 @@ class MainMoviePost extends Component {
     return (
       <Page>
         <Title title={title} />
-        <GenresTag2 changeGenres={this.changeGenres} genre={genre} />
+        <GenresTag changeGenres={this.changeGenres} genre={genre}/>
         {loaded
           ? <MovieList movies={movies} limit={limit} renderType="slider" /> : <Spinner />
         }
         <Button
           to={`${process.env.PUBLIC_URL}/movie_list/${sort}&${genre}`}
-          href={`${process.env.PUBLIC_URL}/movie_list/${sort}&${genre !== 'all' ? genre : 'all'}`}
+          href={`${process.env.PUBLIC_URL}/movie_list/${sort}&${genre !== '' ? genre : 'All'}`}
         />
       </Page>
     );

@@ -93,8 +93,13 @@ class DropDown extends Component {
     const { listOpen } = this.state;
     const { choiceGenre, headerTitle, genres } = this.props;
 
+    console.log(listOpen);
     return (
-      <StyledDropDown onMouseEnter={() => this.toggleList()} onMouseLeave={() => this.toggleList()}>
+      <StyledDropDown
+        onClick={() => this.toggleList()}
+        onMouseEnter={() => this.toggleList()}
+        onMouseLeave={() => this.toggleList()}
+      >
         <StyledHeader>
           <span>
             {headerTitle}
@@ -108,7 +113,6 @@ class DropDown extends Component {
                 key={genre.id}
                 onClick={() => {
                   choiceGenre(genre.title);
-                  this.toggleList();
                 }}
               >
                 {genre.title}
