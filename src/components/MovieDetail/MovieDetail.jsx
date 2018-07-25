@@ -38,7 +38,6 @@ const Trailler = styled.div`
   width: 100%;
   height: 360px;
   margin: 0 auto;
-  z-index: -1;
   background: url(${({ trailer } = this.props) => `${YT_PATH}${trailer}/0.jpg`});
   background-repeat: no-repeat;
   background-size: cover;

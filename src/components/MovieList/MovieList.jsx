@@ -5,7 +5,7 @@ import Slider from 'react-slick';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { SliderItem, ListItem, SuggestItem } from 'components/MovieItem';
-
+import { NextButton, PrevButton } from 'components/Arrows';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 
@@ -14,43 +14,6 @@ const StyledMovieList = styled.ul`
   width: 100%;
   margin-bottom: 24px;
   ${({ flex } = this.props) => flex && 'display: flex; flex-wrap: wrap;'};
-`;
-
-const NextButton = styled.div`
-  position: absolute;
-  top: 50%;
-  right: -30px;
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
-  background: rgba(255, 255, 255, 0.9);
-  transform: translateY(-50%);
-  cursor: pointer;
-  z-index: 100;
-
-  &:after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 45%;
-    border-left: 20px solid #444;
-    border-top: 15px solid transparent;
-    border-bottom: 15px solid transparent;
-    transform: translateY(-50%);
-  }
-`;
-
-const PrevButton = styled(NextButton)`
-  right: auto;
-  left: -30px;
-
-  &:after {
-    left: auto;
-    right: 45%;
-    border-left: none;
-    border-right: 20px solid #444;
-  }
 `;
 
 const NextArrow = (props) => {
@@ -147,8 +110,12 @@ class MovieList extends Component {
 }
 
 MovieList.propTypes = {
-  movies: PropTypes.array.isRequired,
+  movies: PropTypes.array,
   renderType: PropTypes.string.isRequired,
+};
+
+MovieList.defaultProps = {
+  movies: [],
 };
 
 export default MovieList;

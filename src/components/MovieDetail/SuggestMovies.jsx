@@ -40,7 +40,7 @@ SuggestMovies.propTypes = {
 };
 
 SuggestMovies.defaultProps = {
-  movies: null,
+  movies: [],
 };
 
 export default SuggestMovies;

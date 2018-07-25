@@ -8,6 +8,7 @@ import device from 'response';
 const StyledImgSlider = styled.div`
   width: 100%;
   margin-top: 60px;
+  overflow: hidden;
 
   & > img {
     width: 100%;
@@ -26,7 +27,8 @@ const ImgSlider = ({ ...imgs, movieTitle }) => {
     slidesToScroll: 1,
     arrows: false,
     autoplay: true,
-    pauseOnHover: false,
+    pauseOnHover: true,
+    dots: true,
   };
 
   return (
