@@ -4,8 +4,9 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import device from 'response';
 
-const StyledSliderItem = styled.div`
+const StyledSuggestItem = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -36,6 +37,13 @@ const Poster = styled.img`
 const Info = styled.div`
   width: 100%;
   padding: 12px 8px;
+
+  @media ${device.mobileL} {
+    padding: 16px 24px;
+    background: #fff;
+    border: 1px solid #eee;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  }
 `;
 
 const Title = styled.h2`
@@ -49,6 +57,10 @@ const Title = styled.h2`
   -webkit-box-orient: vertical;
   word-wrap: break-word;
   word-break: break-word;
+
+  @media ${device.mobileL} {
+    font-size: 24px;
+  }
 `;
 
 const Genres = styled.div`
@@ -56,6 +68,10 @@ const Genres = styled.div`
   flex-wrap: wrap;
   font-size: 13px;
   color: #808080;
+
+  @media ${device.mobileL} {
+    font-size: 15px;
+  }
 `;
 
 const Genre = styled.span`
@@ -67,23 +83,59 @@ const Genre = styled.span`
   }
 `;
 
+const StyledLink = styled(Link)`
+  margin-bottom: 50px;
+  flex: 0 0 25%;
+
+  @media ${device.laptop} {
+    flex: 0 0 33%;
+  }
+
+  @media ${device.tablet} {
+    flex: 0 0 50%;
+  }
+
+  @media ${device.mobileL} {
+    flex: 0 0 100%;
+  }
+`;
+
 const RatingNumber = styled.span`
   color: #f7b731;
   font-size: 13px;
   margin-left: 4px;
+
+  @media ${device.mobileL} {
+    font-size: 15px;
+  }
 `;
 
 const Ratings = styled.div`
   display: flex;
   align-items: center;
+  margin-bottom: 4px;
+
+  @media ${device.mobileL} {
+    font-size: 15px;
+  }
 `;
 
-const SliderItem = ({ movie }) => (
-  <Link
-    to={`${process.env.PUBLIC_URL}/detail/${movie.id}`}
-    href={`${process.env.PUBLIC_URL}/detail/${movie.id}`}
-  >
-    <StyledSliderItem key={movie.id}>
+const Synopsis = styled.p`
+  font-weight: 300;
+  line-height: 1.4em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  word-wrap: break-word;
+  word-break: break-word;
+  color: #999;
+`;
+
+const SuggestItem = ({ movie }) => (
+  <StyledLink to={`${process.env.PUBLIC_URL}/detail/${movie.id}`}>
+    <StyledSuggestItem key={movie.id}>
       <WrapPoster>
         <Poster src={movie.medium_cover_image} alt={`${movie.title} Poster`} />
       </WrapPoster>
@@ -113,13 +165,16 @@ const SliderItem = ({ movie }) => (
             {movie.rating}
           </RatingNumber>
         </Ratings>
+        <Synopsis>
+          {movie.synopsis}
+        </Synopsis>
       </Info>
-    </StyledSliderItem>
-  </Link>
+    </StyledSuggestItem>
+  </StyledLink>
 );
 
-SliderItem.propTypes = {
+SuggestItem.propTypes = {
   movie: PropTypes.object.isRequired,
 };
 
-export default SliderItem;
+export default SuggestItem;

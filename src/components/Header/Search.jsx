@@ -4,9 +4,9 @@ import axios from 'axios';
 import device from 'response';
 
 import { PATH_BASE, QUERY_TERM, PARAM_LIMIT } from 'components/Constant';
-import { MovieList } from 'components/MoviePost';
 import { Spinner } from 'components/Spinner';
 import SearchIcon from 'components/svg';
+import MovieList from 'components/MovieList';
 
 const StyledSearch = styled.div`
   display: flex;
@@ -160,7 +160,7 @@ class Search extends Component {
           <SearchResult>
             {loaded ? (
               searchResult.movies ? (
-                <MovieList movies={searchResult.movies} />
+                <MovieList movies={searchResult.movies} renderType="list" />
               ) : (
                 <SearchNotFound>
                   {'could not bring a movie... Please check the query.'}

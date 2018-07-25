@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import Slider from 'react-slick';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { SliderItem, ListItem } from 'components/MovieItem';
+import { SliderItem, ListItem, SuggestItem } from 'components/MovieItem';
 
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
@@ -13,7 +13,7 @@ const StyledMovieList = styled.ul`
   position: relative;
   width: 100%;
   margin-bottom: 24px;
-  ${({ renderType } = this.props) => (renderType === 'list' ? 'display: flex; flex-wrap: wrap;' : null)};
+  ${({ flex } = this.props) => flex && 'display: flex; flex-wrap: wrap;'};
 `;
 
 const NextButton = styled.div`
@@ -87,7 +87,6 @@ class MovieList extends Component {
       speed: 500,
       slidesToShow: 5,
       slidesToScroll: 5,
-      initialSlide: 0,
       infinite: false,
       slide: 'li',
       nextArrow: <NextArrow />,
@@ -103,39 +102,47 @@ class MovieList extends Component {
         },
         {
           breakpoint: 768,
-          settings: { slidesToShow: 2.5, slidesToScroll: 2.5, arrows: false },
+          settings: {
+            slidesToShow: 2,
+            arrows: false,
+            swipeToSlide: true,
+            slidesToScroll: 1,
+          },
         },
         {
           breakpoint: 425,
           settings: {
-            slidesToShow: 1.5,
-            slidesToScroll: 1.5,
+            slidesToShow: 1,
             arrows: false,
+            swipeToSlide: true,
+            slidesToScroll: 1,
           },
         },
       ],
     };
 
     const { movies, renderType } = this.props;
+    const isFlex = target => target !== 'slider';
 
-    return movies ? (
-      <StyledMovieList renderType={renderType}>
-        {renderType === 'slider' ? (
-          <Slider
-            {...settings}
-            ref={(c) => {
-              this.slider = c;
-            }}
-          >
-            {movies.map(movie => <SliderItem movie={movie} key={movie.id} />)}
-          </Slider>
-        ) : null}
-
-        {renderType === 'list'
-          ? movies.map(movie => <ListItem movie={movie} key={movie.id} />)
-          : null}
-      </StyledMovieList>
-    ) : null;
+    return (
+      movies && (
+        <StyledMovieList flex={isFlex(renderType)}>
+          {renderType === 'slider' && (
+            <Slider
+              {...settings}
+              ref={(c) => {
+                this.slider = c;
+              }}
+            >
+              {movies.map(movie => <SliderItem movie={movie} key={movie.id} />)}
+            </Slider>
+          )}
+          {renderType === 'list' && movies.map(movie => <ListItem movie={movie} key={movie.id} />)}
+          {renderType === 'suggest'
+            && movies.map(movie => <SuggestItem movie={movie} key={movie.id} />)}
+        </StyledMovieList>
+      )
+    );
   }
 }
 

@@ -31,7 +31,7 @@ const SuggestMovies = ({ movies }) => (
     <Heading>
       {'Suggest Movies'}
     </Heading>
-    <MovieList movies={movies} renderType="list" />
+    <MovieList movies={movies} renderType="suggest" />
   </StyledSuggest>
 );
 
