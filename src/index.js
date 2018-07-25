@@ -10,10 +10,10 @@ injectGlobal([
   `
   html {
     position: relative;
-    overflow-x: hidden;
-    height: 100%;
+    overflow-x : hidden;
     -webkit-overflow-scrolling: touch;
   }
+  
   * {
     padding: 0;
     margin: 0;
@@ -33,7 +33,6 @@ injectGlobal([
     font-family: 'Open Sans', sans-serif;
     font-size: 14px;
     font-weight: 400;
-    
   }
 
   a {

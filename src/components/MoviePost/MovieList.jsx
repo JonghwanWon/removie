@@ -7,7 +7,6 @@ import MovieItem from './MovieItem';
 const StyledMovieList = styled.ul`
   display: flex;
   width: 100%;
-  flex-wrap: wrap;
   flex-wrap: ${({ isWrap } = this.props) => (isWrap ? 'wrap' : 'nowrap')};
   margin-bottom: 40px;
 `;

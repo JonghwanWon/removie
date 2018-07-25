@@ -82,14 +82,14 @@ const GenresTag = ({ changeGenres, genre }) => (
   <StyledGenresTag>
     {categories.map(
       category => (genre.toLowerCase() !== category.label.toLowerCase() ? (
-        <Tag onClick={() => changeGenres(category.label.toLowerCase())}>
+        <Tag key={category.id} onClick={() => changeGenres(category.label.toLowerCase())}>
           <Dot color={category.dotColor} />
           <span>
             {category.label}
           </span>
         </Tag>
       ) : (
-        <ActiveTag onClick={() => changeGenres(category.label.toLowerCase())}>
+        <ActiveTag key={category.id} onClick={() => changeGenres(category.label.toLowerCase())}>
           <Dot color={category.dotColor} />
           <span>
             {category.label}

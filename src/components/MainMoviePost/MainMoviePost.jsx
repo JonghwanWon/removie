@@ -95,7 +95,7 @@ class MainMoviePost extends Component {
     return (
       <Page>
         <Title title={title} />
-        <GenresTag changeGenres={this.changeGenres} genre={genre}/>
+        <GenresTag changeGenres={this.changeGenres} genre={genre} />
         {loaded
           ? <MovieList movies={movies} limit={limit} renderType="slider" /> : <Spinner />
         }

@@ -67,7 +67,6 @@ class Header extends Component {
   onScroll = () => {
     const el = document.querySelector('#topHeader').clientHeight;
     const pageY = window.pageYOffset;
-
     if (pageY > el) {
       this.setState({
         isScrolling: true,
@@ -82,6 +81,7 @@ class Header extends Component {
 
   render() {
     const { isScrolling } = this.state;
+
     return (
       <StyledHeader>
         <TopHeader id="topHeader">
