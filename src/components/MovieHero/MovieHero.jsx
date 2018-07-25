@@ -67,7 +67,8 @@ const Title = styled.h2`
   font-weight: 900;
   color: #fff;
   margin-bottom: 24px;
-
+  text-align: center;
+  
   @media ${device.tablet} {
     font-size: 36px;
   }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import device from 'response';
 
 import Logo from './Logo';
 import Hamburger from './Hamburger';
@@ -25,6 +26,10 @@ const TopHeader = styled.div`
   max-width: 1400px;
   height: 100px;
   border-bottom: 1px solid #ccc;
+
+  @media ${device.laptopL} {
+    width: 90%;
+  }
 `;
 
 const StyledSearch = styled.div`

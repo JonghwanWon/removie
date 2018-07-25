@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import device from 'response';
 
 import { PATH_BASE, QUERY_TERM, PARAM_LIMIT } from 'components/Constant';
 import { MovieList } from 'components/MoviePost';
@@ -16,6 +17,10 @@ const StyledSearch = styled.div`
   max-width: 1400px;
   padding: 16px 0;
   border-bottom: ${({ keyword } = this.props) => (keyword !== '' ? '1px solid #efefef;' : 'none')};
+
+  @media ${device.laptopL} {
+    width: 90%;
+  }
 `;
 
 const StyledInput = styled.input`
